@@ -6,7 +6,7 @@
     "esModuleInterop": true,
     "module": "NodeNext",
     "target": "ESNext",
-    "moduleResolution": "NodeNext"
+    "lib": ["ESNext"]
   },
   "include": ["src"]
 }

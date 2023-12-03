@@ -7,7 +7,7 @@ export const getPackageRoot = async () => {
 };
 
 export const getPackageJson = async () => {
-  return fs.readJson(path.join(await getPackageRoot(), "package.json"), "utf-8");
+  return fs.readJSON(path.join(await getPackageRoot(), "package.json"), "utf-8");
 };
 
 export const amendPackageJson = async (amend: object) => {

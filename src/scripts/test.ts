@@ -1,1 +1,2 @@
-utils.node.addDependency("typescript");
+// utils.node.addDependency("typescript");
+console.log("!", args);

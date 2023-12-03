@@ -17,4 +17,5 @@ declare global {
   var ask: typeof askLib;
   var utils: typeof utilsLib;
   var glob: typeof globLib;
+  var scriptsRoot: string;
 }

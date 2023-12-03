@@ -1191,6 +1191,7 @@ __metadata:
   resolution: "@lukasbach/scripts@workspace:."
   dependencies:
     "@lukasbach/eslint-config-deps": ^1.0.3
+    "@microsoft/tsdoc": ^0.14.2
     "@types/deepmerge": ^2.2.0
     "@types/fs-extra": ^11.0.4
     "@types/inquirer": ^9.0.7
@@ -1218,6 +1219,13 @@ __metadata:
     ldo: lib/core/run.js
   languageName: unknown
   linkType: soft
+
+"@microsoft/tsdoc@npm:^0.14.2":
+  version: 0.14.2
+  resolution: "@microsoft/tsdoc@npm:0.14.2"
+  checksum: b167c89e916ba73ee20b9c9d5dba6aa3a0de25ed3d50050e8a344dca7cd43cb2e1059bd515c820369b6e708901dd3fda476a42bc643ca74a35671ce77f724a3a
+  languageName: node
+  linkType: hard
 
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5

@@ -1,4 +1,20 @@
+import path from "path";
+
 export * as node from "./node.js";
+
+export const runScript = async (script: string) => {
+  const resolvedScript = [`${script}`, `${script}/index`].find(
+    (s) =>
+      global.fs.existsSync(path.join(global.scriptsRoot, `${s}.ts`)) ||
+      global.fs.existsSync(path.join(global.scriptsRoot, `${s}.js`))
+  );
+
+  if (!resolvedScript) {
+    throw new Error(`Could not find script ${script}`);
+  }
+
+  await import(`../scripts/${resolvedScript}.js`);
+};
 
 export const replaceTemplateText = (template: string, vars: Record<string, any>) => {
   return template.replace(/\{\{([a-zA-Z0-9_]+)\}\}/g, (_, key) => {
@@ -29,3 +45,5 @@ export const assert = (condition: boolean, message: string) => {
     throw new Error(message);
   }
 };
+
+export const isNotNull = <T>(x: T | null): x is T => x !== null;

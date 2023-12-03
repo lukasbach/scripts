@@ -9,9 +9,14 @@
   "main": "lib/index.js",
   "module": "lib/index.js",
   "typings": "lib/index.d.ts",
-  "repository": "https://github.com/lukasbach/scripts",
-  "author": "Lukas Bach <npm@lukasbach.com>",
+  "repository": "https://github.com/lukasbach/scripts.git",
+  "author": "Lukas Bach <contact@lukasbach.com>",
   "license": "MIT",
+  "tags": [
+    "scripts",
+    "cli",
+    "utils"
+  ],
   "files": [
     "lib/**/*",
     "!lib/**/*.spec.js"
@@ -37,6 +42,7 @@
   },
   "devDependencies": {
     "@lukasbach/eslint-config-deps": "^1.0.3",
+    "@microsoft/tsdoc": "^0.14.2",
     "@types/deepmerge": "^2.2.0",
     "@types/fs-extra": "^11.0.4",
     "@types/inquirer": "^9.0.7",
