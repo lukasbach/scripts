@@ -8,9 +8,13 @@ import * as path from "path";
 import * as os from "os";
 import { glob } from "glob";
 import { fileURLToPath } from "url";
+import inquirerPrompt from "inquirer-autocomplete-prompt";
+import inquirer from "inquirer";
 import * as ask from "./ask.js";
 import * as log from "./log.js";
 import * as utils from "./utils.js";
+
+inquirer.registerPrompt("autocomplete", inquirerPrompt);
 
 const argv = await yargs(hideBin(process.argv)).help(false).argv;
 const [script, ...args] = argv._;
@@ -28,5 +32,10 @@ global.glob = glob;
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 global.scriptsRoot = path.join(dirname, "../scripts");
+
+if (!script) {
+  await utils.runScript("find");
+  process.exit(0);
+}
 
 await utils.runScript(`${script}`);

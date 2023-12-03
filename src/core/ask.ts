@@ -12,6 +12,7 @@ const getFromArgs = (keys: string): any | undefined => {
       return args[key];
     }
   }
+  log.verbose(`Arg ${keys} not found in args`);
   return undefined;
 };
 
@@ -26,7 +27,17 @@ export const choice = async <T extends string>(
   defaultValue?: string
 ): Promise<T> => {
   return (
-    getFromArgs(keys) ?? (await inquirer.prompt({ type: "list", message, default: defaultValue, choices, name: "v" })).v
+    getFromArgs(keys) ??
+    (
+      await inquirer.prompt({
+        type: "autocomplete",
+        message,
+        default: defaultValue,
+        choices,
+        source: (_, input) => choices.filter((c) => !input || c.toLowerCase().includes(input?.toLowerCase())),
+        name: "v",
+      } as any)
+    ).v
   );
 };
 
