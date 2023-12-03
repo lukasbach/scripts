@@ -29,14 +29,14 @@ export const getScriptPageHtml = (script: ScriptData) => {
     .join("\n");
 
   let content = `<h1>${script.command}</h1><p>${marked.parse(script.summary)}</p>`;
-  content += `<h2>Usage</h2><pre><code>npx @lukasbach/scripts ${script.command} [options]</code></pre>`;
-  content += `<p>You can also omit options, and will be asked for them interactively.</p>`;
-  content += `<p>Add <code>--yes</code> to skip all confirmations.</p>`;
+  content += `<h2>Usage</h2><pre><code>npx @lukasbach/scripts ${script.command}</code></pre>`;
   content += `<p>You can call the script directly if you have installed it globally:</p>`;
-  content += `<pre><code>npm i -g @lukasbach/scripts\nldo ${script.command} [options]</code></pre>`;
+  content += `<pre><code>npm i -g @lukasbach/scripts\nldo ${script.command}</code></pre>`;
 
   if (script.questions.length > 0) {
     content += `<h2>Options</h2><ul>${questionRows}</ul>`;
+    content += `<p>You can also omit options, and will be asked for them interactively.</p>`;
+    content += `<p>Add <code>--yes</code> to skip all confirmations.</p>`;
   }
   if (script.imports.length > 0) {
     content += `<h2>Referenced scripts</h2><ul>${script.imports
@@ -60,7 +60,9 @@ export const getContainerHtml = (allScripts: ScriptData[], title: string, conten
       ${getSidebarHtml(allScripts)}
     </div>
     <div class="content">
-      ${content}
+      <div class="inner">
+        ${content}
+      </div>
     </div>
   </body>
 </html>`;

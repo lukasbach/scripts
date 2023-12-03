@@ -43,5 +43,6 @@ export const addDevDependency = async (installName: string) => {
     yarn: `yarn add ${installName} --dev`,
     pnpm: `pnpm add ${installName} --save-dev`,
   };
-  await $({ cwd: await getPackageRoot() })`${scripts[pm]}`;
+  console.log("!!", await getPackageRoot());
+  await $({ cwd: await getPackageRoot(), verbose: true })`${scripts[pm]}`;
 };

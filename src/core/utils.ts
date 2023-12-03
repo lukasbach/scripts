@@ -1,6 +1,10 @@
 import path from "path";
+import noindentLib from "noindent";
 
 export * as node from "./node.js";
+export * as changeCase from "change-case";
+
+export const noindent = noindentLib.default;
 
 export const runScript = async (script: string) => {
   const resolvedScript = [`${script}`, `${script}/index`].find(

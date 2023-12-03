@@ -24,6 +24,7 @@
   "dependencies": {
     "@microsoft/tsdoc": "^0.14.2",
     "chalk": "^5.3.0",
+    "change-case": "^5.2.0",
     "deepmerge": "^4.3.1",
     "execa": "^8.0.1",
     "fs-extra": "^11.2.0",
@@ -31,6 +32,7 @@
     "inquirer": "^9.2.12",
     "marked": "^11.0.0",
     "minimist": "^1.2.8",
+    "noindent": "^1.0.0",
     "yargs": "^17.7.2"
   },
   "scripts": {

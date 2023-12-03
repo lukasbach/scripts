@@ -1199,6 +1199,7 @@ __metadata:
     "@types/node": ^18.8.5
     "@types/yargs": ^17.0.32
     chalk: ^5.3.0
+    change-case: ^5.2.0
     deepmerge: ^4.3.1
     esbuild: ^0.19.8
     esbuild-runner: ^2.2.2
@@ -1209,9 +1210,9 @@ __metadata:
     glob: ^10.3.10
     inquirer: ^9.2.12
     jest: ^29.1.2
-    markdown: ^0.5.0
     marked: ^11.0.0
     minimist: ^1.2.8
+    noindent: ^1.0.0
     npm-run-all: ^4.1.5
     publish-fast: ^0.0.18
     rimraf: ^3.0.2
@@ -1766,7 +1767,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"abbrev@npm:1, abbrev@npm:^1.0.0":
+"abbrev@npm:^1.0.0":
   version: 1.1.1
   resolution: "abbrev@npm:1.1.1"
   checksum: a4a97ec07d7ea112c517036882b2ac22f3109b7b19077dc656316d07d308438aac28e4d9746dc4d84bf6b1e75b4a7b0a5f3cb30592419f128ca9a8cee3bcfa17
@@ -2302,6 +2303,13 @@ __metadata:
   version: 5.3.0
   resolution: "chalk@npm:5.3.0"
   checksum: 623922e077b7d1e9dedaea6f8b9e9352921f8ae3afe739132e0e00c275971bdd331268183b2628cf4ab1727c45ea1f28d7e24ac23ce1db1eb653c414ca8a5a80
+  languageName: node
+  linkType: hard
+
+"change-case@npm:^5.2.0":
+  version: 5.2.0
+  resolution: "change-case@npm:5.2.0"
+  checksum: e9ca854f120852c0947020f7bc1e307c4ca01f61b7914519e82972ce89b76e0841c3f12f9dca2bdad78c6df225425cf83a5037102d2931b0089f009132add5a0
   languageName: node
   linkType: hard
 
@@ -5246,17 +5254,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markdown@npm:^0.5.0":
-  version: 0.5.0
-  resolution: "markdown@npm:0.5.0"
-  dependencies:
-    nopt: ~2.1.1
-  bin:
-    md2html: ./bin/md2html.js
-  checksum: 2b2a941d2cc6ce6c65002e6e961f66e4b839492a489e367d488fbdb9758ddbba0f6a762d7d015f417d96585a8c74d1da6ed6e2a0ba1bcbc2729e86dbd3ec6ae1
-  languageName: node
-  linkType: hard
-
 "marked@npm:^11.0.0":
   version: 11.0.0
   resolution: "marked@npm:11.0.0"
@@ -5553,6 +5550,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"noindent@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "noindent@npm:1.0.0"
+  checksum: f8dca61369f4090591f293dddf5645f9e1d1cedd5c8cf44f3783eeb1eb69330c4019cc7e7cc2f03eff4923acb9b1d3b6ba5488d23595b0aa6ceb725287a3a06e
+  languageName: node
+  linkType: hard
+
 "nopt@npm:^6.0.0":
   version: 6.0.0
   resolution: "nopt@npm:6.0.0"
@@ -5561,17 +5565,6 @@ __metadata:
   bin:
     nopt: bin/nopt.js
   checksum: 82149371f8be0c4b9ec2f863cc6509a7fd0fa729929c009f3a58e4eb0c9e4cae9920e8f1f8eb46e7d032fec8fb01bede7f0f41a67eb3553b7b8e14fa53de1dac
-  languageName: node
-  linkType: hard
-
-"nopt@npm:~2.1.1":
-  version: 2.1.2
-  resolution: "nopt@npm:2.1.2"
-  dependencies:
-    abbrev: 1
-  bin:
-    nopt: ./bin/nopt.js
-  checksum: eb7bf965c0117d537f1859b5da1d33cf3d48c63fa4c7f95ed1356fa07323ea5938878cf6bd511b7c6240c21a3b3f079066398c1d26dd9e2eb6235d0963013b7f
   languageName: node
   linkType: hard
 

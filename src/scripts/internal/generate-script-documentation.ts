@@ -26,3 +26,4 @@ const html = getContainerHtml(
   await marked.parse(await fs.readFile(path.join(scriptsRoot, "../../README.md"), "utf-8"))
 );
 await fs.writeFile(path.join(target, `index.html`), html);
+await fs.copy(path.join(scriptsRoot, "internal/styles.css"), path.join(target, `styles.css`));
