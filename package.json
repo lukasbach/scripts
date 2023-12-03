@@ -80,6 +80,7 @@
     ]
   },
   "publish": {
-    "preScripts": "build,build:docs,lint:test"
+    "preScripts": "build,build:docs,lint:test",
+    "npmAccess": "public"
   }
 }
