@@ -9,6 +9,7 @@ import * as os from "os";
 import { glob } from "glob";
 import { fileURLToPath } from "url";
 import * as ask from "./ask.js";
+import * as log from "./log.js";
 import * as utils from "./utils.js";
 
 const argv = await yargs(hideBin(process.argv)).help(false).argv;
@@ -20,6 +21,7 @@ global.fs = fs.default as any;
 global.path = path;
 global.os = os;
 global.ask = ask;
+global.log = log;
 global.utils = utils;
 global.glob = glob;
 

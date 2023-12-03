@@ -6,28 +6,28 @@ const scriptData = await resolveScriptData(await getScriptPaths());
 const script = scriptData[args._[0]];
 
 if (!script) {
-  throw new Error(`Script ${args._[0]} not found`);
+  log.exit(`Script ${args._[0]} not found`);
 }
 
-console.log(`# ${script.script}\n`);
-console.log(script.summary);
+log.out(`# ${script.script}\n`);
+log.out(script.summary);
 
-console.log("Options:");
+log.out("Options:");
 let i = 0;
 for (const question of script.args) {
-  console.log(`  [${i++}]: ${question.question}`);
+  log.out(`  [${i++}]: ${question.question}`);
 }
 for (const question of script.options) {
   const keys = question.keys
     .sort((a, b) => b.length - a.length)
     .map((k) => (k.length === 1 ? `-${k}` : `--${k}`))
     .join(", ");
-  console.log(`  ${keys}: ${question.question}`);
+  log.out(`  ${keys}: ${question.question}`);
 }
 
 if (script.options.length === 0 && script.args.length === 0) {
-  console.log("  none");
+  log.out("  none");
 }
 
-console.log("\n\nYou can also omit options, and will be asked for them interactively.");
-console.log("Add --yes to skip all confirmations.");
+log.out("\n\nYou can also omit options, and will be asked for them interactively.");
+log.out("Add --yes to skip all confirmations.");

@@ -1,10 +1,13 @@
-/** Creates a React Functional Component. */
+/** Creates a React Functional Component with dedicated props type. */
 
 const componentName = await ask.text("_", "React component name", "MyComponent");
+const pascalName = utils.changeCase.pascalCase(componentName);
 const content = utils.noindent(`
   import { FC } from "react";
+
+  type ${pascalName}Props = {};
   
-  export const ${utils.changeCase.pascalCase(componentName)}: FC<{}> = ({}) => {
+  export const ${pascalName}: FC<${pascalName}Props> = ({}) => {
     return (
       <>
         hello

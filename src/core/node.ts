@@ -1,10 +1,11 @@
-import { execa, execaCommand } from "execa";
+import { execaCommand } from "execa";
 
 export const getPackageRoot = async () => {
   const root = await utils.goUpTree((dir) => fs.exists(path.join(dir, "package.json")));
   if (!root) {
     throw new Error("Could not find package.json");
   }
+  log.verbose(`Resolved node package root to ${root}`);
   return root;
 };
 
@@ -44,6 +45,16 @@ export const addDevDependency = async (installName: string) => {
     npm: `npm install ${installName} --save-dev`,
     yarn: `yarn add ${installName} --dev`,
     pnpm: `pnpm add ${installName} --save-dev`,
+  };
+  await execaCommand(scripts[pm], { cwd: await getPackageRoot() });
+};
+
+export const runScript = async (scriptName: string) => {
+  const pm = await getPackageManager();
+  const scripts = {
+    npm: `npm run ${scriptName}`,
+    yarn: `yarn run ${scriptName}`,
+    pnpm: `pnpm run ${scriptName}`,
   };
   await execaCommand(scripts[pm], { cwd: await getPackageRoot() });
 };

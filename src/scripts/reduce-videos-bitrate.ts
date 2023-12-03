@@ -1,4 +1,4 @@
-/** Uses ffmpeg to reduce the bitrate of all videos matched by a glob */
+/** Uses ffmpeg to reduce the bitrate of all videos matched by a glob. Videos are copied, not replaced. */
 
 const filesGlob = await ask.text("source,s", "Where are the video files to compress?", "**/*.mp4");
 const outputTemplate = await ask.text(

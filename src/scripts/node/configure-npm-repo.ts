@@ -1,9 +1,6 @@
 /**
- * Documentation of
- * the script *which*
- * explains what it <b>does</b>.
- *
- * @example abc
+ * Configures the package.json based on user input. Some settings, like description, are also synced to the Github repo.
+ * Also fixes the repo url in the package.json based on the git remote.
  */
 
 const packageJson = await utils.node.getPackageJson();

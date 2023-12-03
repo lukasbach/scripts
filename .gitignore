@@ -6,10 +6,10 @@
 !.yarn/sdks
 !.yarn/versions
 node_modules
+yarn-error.log
 
 lib
 exec
-yarn-error.log
 
 .idea
 dist

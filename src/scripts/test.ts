@@ -1,4 +1,6 @@
-import { execaCommand } from "execa";
+const a = {};
 
-const cmd = `yarn add @types/deepmerge --dev`;
-await execaCommand(cmd, { verbose: true });
+log.verbose("verbose text", a);
+log.info("info text", a);
+log.warn("warn text", a);
+log.error("error text", a);

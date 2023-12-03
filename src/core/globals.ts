@@ -7,6 +7,7 @@ import { Arguments } from "yargs";
 import type { glob as globLib } from "glob";
 import type * as askLib from "./ask.js";
 import type * as utilsLib from "./utils.js";
+import type * as logLib from "./log.js";
 
 declare global {
   var args: Arguments;
@@ -16,6 +17,7 @@ declare global {
   var os: typeof osLib;
   var ask: typeof askLib;
   var utils: typeof utilsLib;
+  var log: typeof logLib;
   var glob: typeof globLib;
   var scriptsRoot: string;
 }
