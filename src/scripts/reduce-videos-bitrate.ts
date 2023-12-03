@@ -1,6 +1,12 @@
-const filesGlob = await ask.text("Where are the video files to compress?", "**/*.mp4");
-const outputTemplate = await ask.text("Where should the files be stored?", "{{folder}}/compressed/{{name}}.mp4");
-const crf = await ask.number("What CRF value should be used (0=lossless, 51=worst)?", "24");
+/** Uses ffmpeg to reduce the bitrate of all videos matched by a glob */
+
+const filesGlob = await ask.text("source,s", "Where are the video files to compress?", "**/*.mp4");
+const outputTemplate = await ask.text(
+  "dest,d",
+  "Where should the files be stored?",
+  "{{folder}}/compressed/{{name}}.mp4"
+);
+const crf = await ask.number("crf", "What CRF value should be used (0=lossless, 51=worst)?", "24");
 
 const files = glob.sync(filesGlob);
 

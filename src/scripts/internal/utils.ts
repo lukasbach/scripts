@@ -45,13 +45,13 @@ export const resolveScriptData = async (scripts: string[]) => {
 
         const summary = Formatter.renderDocNodes(parserContext.docComment.summarySection.nodes);
         const commands = [...code.matchAll(/\$`([^`]*)`/g)].map((t) => t[1]);
-        const questions = [...code.matchAll(/ask.(?!confirm)[^(]*\(["'`]([^"'`]+)["'`],\s*["'`]([^"'`]+)["'`]/g)].map(
-          (t) => ({
-            keys: t[1].split(","),
-            question: t[2],
-          })
-        );
-        const imports = [...code.matchAll(/utils.runScript\(["'`]([^"'`]+)["'`]\)/g)].map((t) => t[1]);
+        const questions = [
+          ...code.matchAll(/ask.(?!confirm)[^(]*\(\s*["'`]([^"'`]+)["'`],\s*["'`]([^"'`]+)["'`]/g),
+        ].map((t) => ({
+          keys: t[1].split(","),
+          question: t[2],
+        }));
+        const imports = [...code.matchAll(/utils.runScript\(\s*["'`]([^"'`]+)["'`]\s*\)/g)].map((t) => t[1]);
         const command = script
           .replace(/\\/g, "/")
           .replace(/^src\/scripts\//, "")
@@ -64,6 +64,7 @@ export const resolveScriptData = async (scripts: string[]) => {
           questions,
           imports,
           command,
+          code,
           isInternal: parserContext.docComment.modifierTagSet.isInternal(),
         };
       })
@@ -75,7 +76,7 @@ export const resolveScriptData = async (scripts: string[]) => {
   );
   const resolveImports = (command: string) => {
     const data = scriptData[command];
-    return deepmerge.all([data, ...data.imports.flatMap(resolveImports)]);
+    return deepmerge.all([...data.imports.flatMap(resolveImports), data]);
   };
 
   for (const command of Object.keys(scriptData)) {
@@ -83,3 +84,5 @@ export const resolveScriptData = async (scripts: string[]) => {
   }
   return scriptData;
 };
+
+export type ScriptData = Awaited<ReturnType<typeof resolveScriptData>>[string];

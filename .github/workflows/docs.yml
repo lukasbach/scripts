@@ -1,0 +1,25 @@
+name: Docs
+on: push
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: volta-cli/action@v3
+      - run: yarn
+      - run: yarn build
+      - run: yarn start internal/generate-script-documentation
+      - uses: actions/upload-pages-artifact@v2
+        with:
+          path: docs
+      - uses: actions/deploy-pages@v2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          folder: docs
