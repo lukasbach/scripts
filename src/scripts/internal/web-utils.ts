@@ -37,11 +37,10 @@ export const getScriptPageHtml = (script: ScriptData) => {
   if (script.args.length > 0) {
     content += `<h2>Arguments</h2><ul>${argsRows}</ul>`;
   }
-  if (script.options.length > 0) {
-    content += `<h2>Options</h2><ul>${questionRows}</ul>`;
-    content += `<p>You can also omit options, and will be asked for them interactively.</p>`;
-    content += `<p>Add <code>--yes</code> to skip all confirmations.</p>`;
-  }
+  content += `<h2>Options</h2><ul>${questionRows}`;
+  content += `<li>-v, --verbose: Verbose logging</li></ul>`;
+  content += `<p>You can also omit options, and will be asked for them interactively.</p>`;
+  content += `<p>Add <code>--yes</code> to skip all confirmations.</p>`;
   if (script.imports.length > 0) {
     content += `<h2>Referenced scripts</h2><ul>${script.imports
       .map((i) => `<li><a href="${i}"><code>${i}</code></a></li>`)
