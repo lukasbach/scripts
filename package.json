@@ -21,6 +21,15 @@
     "lib/**/*",
     "!lib/**/*.spec.js"
   ],
+  "scripts": {
+    "start": "esno ./src/core/run.ts",
+    "build": "tsc",
+    "lint": "eslint . --fix",
+    "lint:test": "eslint .",
+    "prepublishOnly": "yarn build",
+    "clean": "rimraf ./lib/ ./exec/",
+    "release": "publish-fast"
+  },
   "dependencies": {
     "@microsoft/tsdoc": "^0.14.2",
     "chalk": "^5.3.0",
@@ -35,15 +44,6 @@
     "minimist": "^1.2.8",
     "noindent": "^1.0.0",
     "yargs": "^17.7.2"
-  },
-  "scripts": {
-    "start": "esno ./src/core/run.ts",
-    "build": "tsc",
-    "lint": "eslint . --fix",
-    "lint:test": "eslint .",
-    "prepublishOnly": "yarn build",
-    "clean": "rimraf ./lib/ ./exec/",
-    "release": "publish-fast"
   },
   "devDependencies": {
     "@lukasbach/eslint-config-deps": "^1.0.3",
