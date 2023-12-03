@@ -24,6 +24,7 @@
   "scripts": {
     "start": "esno ./src/core/run.ts",
     "build": "tsc",
+    "build:docs": "yarn start internal/generate-script-documentation -d ./docs",
     "lint": "eslint . --fix",
     "lint:test": "eslint .",
     "prepublishOnly": "yarn build",
@@ -79,6 +80,6 @@
     ]
   },
   "publish": {
-    "preScripts": "build,lint:test,test"
+    "preScripts": "build,build:docs,lint:test"
   }
 }
