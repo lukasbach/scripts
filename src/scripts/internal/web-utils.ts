@@ -18,7 +18,7 @@ export const getSidebarHtml = (scripts: ScriptData[]): string => {
 };
 
 export const getScriptPageHtml = (script: ScriptData) => {
-  const questionRows = script.questions
+  const questionRows = script.options
     .map(({ question, keys }) => {
       const keyString = keys
         .sort((a, b) => b.length - a.length)
@@ -27,13 +27,17 @@ export const getScriptPageHtml = (script: ScriptData) => {
       return `<li>${keyString}: ${question}</li>`;
     })
     .join("\n");
+  const argsRows = script.args.map(({ question }, i) => `<li>[${i}]: ${question}</li>`).join("\n");
 
   let content = `<h1>${script.command}</h1><p>${marked.parse(script.summary)}</p>`;
   content += `<h2>Usage</h2><pre><code>npx @lukasbach/scripts ${script.command}</code></pre>`;
   content += `<p>You can call the script directly if you have installed it globally:</p>`;
   content += `<pre><code>npm i -g @lukasbach/scripts\nldo ${script.command}</code></pre>`;
 
-  if (script.questions.length > 0) {
+  if (script.args.length > 0) {
+    content += `<h2>Arguments</h2><ul>${argsRows}</ul>`;
+  }
+  if (script.options.length > 0) {
     content += `<h2>Options</h2><ul>${questionRows}</ul>`;
     content += `<p>You can also omit options, and will be asked for them interactively.</p>`;
     content += `<p>Add <code>--yes</code> to skip all confirmations.</p>`;

@@ -1,3 +1,5 @@
+import { execa, execaCommand } from "execa";
+
 export const getPackageRoot = async () => {
   const root = await utils.goUpTree((dir) => fs.exists(path.join(dir, "package.json")));
   if (!root) {
@@ -33,7 +35,7 @@ export const addDependency = async (installName: string) => {
     yarn: `yarn add ${installName}`,
     pnpm: `pnpm add ${installName}`,
   };
-  await $({ cwd: await getPackageRoot() })`${scripts[pm]}`;
+  await execaCommand(scripts[pm], { cwd: await getPackageRoot() });
 };
 
 export const addDevDependency = async (installName: string) => {
@@ -43,6 +45,5 @@ export const addDevDependency = async (installName: string) => {
     yarn: `yarn add ${installName} --dev`,
     pnpm: `pnpm add ${installName} --save-dev`,
   };
-  console.log("!!", await getPackageRoot());
-  await $({ cwd: await getPackageRoot(), verbose: true })`${scripts[pm]}`;
+  await execaCommand(scripts[pm], { cwd: await getPackageRoot() });
 };

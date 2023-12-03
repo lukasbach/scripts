@@ -13,7 +13,11 @@ console.log(`# ${script.script}\n`);
 console.log(script.summary);
 
 console.log("Options:");
-for (const question of script.questions) {
+let i = 0;
+for (const question of script.args) {
+  console.log(`  [${i++}]: ${question.question}`);
+}
+for (const question of script.options) {
   const keys = question.keys
     .sort((a, b) => b.length - a.length)
     .map((k) => (k.length === 1 ? `-${k}` : `--${k}`))
@@ -21,7 +25,7 @@ for (const question of script.questions) {
   console.log(`  ${keys}: ${question.question}`);
 }
 
-if (script.questions.length === 0) {
+if (script.options.length === 0 && script.args.length === 0) {
   console.log("  none");
 }
 

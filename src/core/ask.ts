@@ -1,7 +1,13 @@
 import inquirer from "inquirer";
 
+let argCounter = 0;
+
 const getFromArgs = (keys: string): any | undefined => {
   for (const key of keys.split(",")) {
+    if (key === "_") {
+      argCounter++;
+      return args._[argCounter - 1];
+    }
     if (args[key]) {
       return args[key];
     }

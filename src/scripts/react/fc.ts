@@ -1,4 +1,4 @@
-const componentName = await ask.text("[0]", "React component name", "MyComponent");
+const componentName = await ask.text("_", "React component name", "MyComponent");
 const content = utils.noindent(`
   import { FC } from "react";
   
