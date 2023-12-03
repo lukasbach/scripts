@@ -6,6 +6,15 @@ export const getPackageRoot = async () => {
   return root;
 };
 
+export const getPackageJson = async () => {
+  return fs.readJson(path.join(await getPackageRoot(), "package.json"), "utf-8");
+};
+
+export const amendPackageJson = async (amend: object) => {
+  const newValue = { ...(await getPackageJson()), ...amend };
+  await fs.writeJson(path.join(await getPackageRoot(), "package.json"), newValue, { spaces: 2 });
+};
+
 export const getPackageManager = async () => {
   const root = await getPackageRoot();
   if (await fs.exists(path.join(root, "yarn.lock"))) {
