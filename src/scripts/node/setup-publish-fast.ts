@@ -2,6 +2,9 @@
 
 await utils.node.addDevDependency("publish-fast");
 await utils.node.amendPackageJson({
+  publishConfig: {
+    access: "public",
+  },
   publish: {
     preScripts: "build,lint:test,test",
     releaseNotesSource: "next-releasenotes.md",
