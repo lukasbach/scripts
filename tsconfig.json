@@ -4,10 +4,9 @@
     "declaration": true,
     "strictNullChecks": true,
     "esModuleInterop": true,
-    "module": "CommonJS",
-    "target": "ES6",
-    "moduleResolution": "Node"
+    "module": "NodeNext",
+    "target": "ESNext",
+    "moduleResolution": "NodeNext"
   },
-  "include": ["src"],
-  "exclude": ["src/**/template-*"]
+  "include": ["src"]
 }
