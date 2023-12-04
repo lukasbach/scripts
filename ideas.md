@@ -5,6 +5,4 @@
 - readme creator
 - build setup scripts
 - packagejson/github metadata fixer
-- move to esm https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c#how-can-i-make-my-typescript-project-output-esm
-- esm: add .js extension to imports
 - 

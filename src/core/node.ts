@@ -15,10 +15,20 @@ export const getPackageJson = async () => {
   return fs.readJSON(path.join(await getPackageRoot(), "package.json"), "utf-8");
 };
 
+export const getTsconfig = async () => {
+  return fs.readJSON(path.join(await getPackageRoot(), "tsconfig.json"), "utf-8");
+};
+
 export const amendPackageJson = async (amend: object) => {
   log.muted(`Amending package.json`);
   const newValue = deepmerge.all([await getPackageJson(), amend]);
   await fs.writeJson(path.join(await getPackageRoot(), "package.json"), newValue, { spaces: 2 });
+};
+
+export const amendTsconfig = async (amend: object) => {
+  log.muted(`Amending tsconfig.json`);
+  const newValue = deepmerge.all([await getTsconfig(), amend]);
+  await fs.writeJson(path.join(await getPackageRoot(), "tsconfig.json"), newValue, { spaces: 2 });
 };
 
 export const getPackageManager = async () => {
