@@ -1,3 +1,13 @@
+@font-face {
+  font-family: "Krypton";
+  src: url("./fonts/MonaspaceKryptonVarVF[wght,wdth,slnt].woff2") format("woff2-variations");
+  font-weight: 1 999;
+}
+
+:root {
+  color-scheme: dark;
+}
+
 html, body {
   /* min-height: 100%;*/
   margin: 0;
@@ -6,6 +16,7 @@ html, body {
 body {
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
   display: flex;
+  background-color: #131f2a;
 }
 
 a, a:visited {
@@ -22,7 +33,7 @@ a:hover {
 }
 
 .inner {
-  margin: 0 2rem;
+  margin: 0 5rem;
   max-width: 600px;
 }
 
@@ -31,20 +42,23 @@ a:hover {
 }
 
 .sidebar {
-  background-color: #000;
-  border-right: 1px solid #e0e0e0;
+  font-family: Krypton, monospace;
+  background-color: #0d1117;
   display: flex;
   flex-direction: column;
-  /*min-height: 100%;*/
   min-width: 240px;
-  padding: 1rem 0;
+  padding: 2rem 0;
+}
+
+.sidebar > a:first-child {
+  margin-bottom: 1rem;
 }
 
 .sidebar a {
   color: #fff;
   text-decoration: none;
   display: block;
-  padding: .2rem 1rem;
+  padding: .2rem 2rem;
   font-size: .8rem;
 }
 
@@ -76,6 +90,11 @@ pre {
   background-color: black;
   color: white;
   padding: 8px;
+}
+
+code {
+  font-family: Krypton, monospace;
+  font-size: .7rem;
 }
 
 /* small screens */

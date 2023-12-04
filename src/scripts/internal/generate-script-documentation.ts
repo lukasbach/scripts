@@ -25,3 +25,4 @@ const html = getContainerHtml(
 );
 await fs.writeFile(path.join(target, `index.html`), html);
 await fs.copy(path.join(scriptsRoot, "../../assets/docs-styles.css"), path.join(target, `styles.css`));
+await fs.copy(path.join(scriptsRoot, "../../assets/fonts"), path.join(target, `fonts`));
