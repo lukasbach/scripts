@@ -35,8 +35,6 @@ for (const event of relevantEvents) {
 
   const key = `${event.repo.name}:${event.payload.ref}`;
 
-  // TODO get data about pr on that ref, and dont show if pr is merged
-
   if (foundOptions.has(key)) {
     continue;
   }
@@ -44,8 +42,15 @@ for (const event of relevantEvents) {
   const refsHead = "refs/heads/";
   const source = event.payload.ref.startsWith(refsHead) ? event.payload.ref.slice(refsHead.length) : event.payload.ref;
 
+  try {
+    await $({ env: { GH_REPO: event.repo.name } })`gh pr view ${source} --json id`;
+    continue; // pr already exists
+  } catch {
+    // error: no pr exists. That's what we want
+  }
+
   foundOptions.add(key);
-  log.out(`${chalk.blueBright(event.repo.name)}: ${event.payload.ref} -> ${defaultBranch}`);
+  log.out(`${chalk.blueBright(event.repo.name)}: ${source} -> ${defaultBranch}`);
   log.out(
     `  ${chalk.underline(chalk.dim(`https://github.com/${event.repo.name}/compare/${defaultBranch}...${source}`))}`
   );
