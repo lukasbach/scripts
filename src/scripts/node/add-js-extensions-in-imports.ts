@@ -9,6 +9,7 @@ const files = await glob(matcher);
 for (const file of files) {
   const content = await fs.readFile(file, "utf-8");
   let count = 0;
+  // eslint-disable-next-line @typescript-eslint/no-loop-func
   const newContent = content.replace(/from\s+['"]([^'"]+)['"]/g, (_, importPath) => {
     const ext = path.extname(importPath);
 
