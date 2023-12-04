@@ -11,7 +11,7 @@ import * as crypto from "crypto";
 
 const root1 = await ask.text("folder1,a", "What is the first folder?");
 const root2 = await ask.text("folder2,b", "What is the second folder?");
-const compareMethod = await ask.choice("compare,c", "How should files be compared?", ["size", "hash"]);
+const compareMethod = await ask.choice("compare,c", "How should files be compared?", ["size", "datesize", "hash"]);
 
 let missingItems1 = 0;
 let missingItems2 = 0;
@@ -38,23 +38,32 @@ const hashFile = async (filePath: string) => {
   });
 };
 
-const compareFile = async (filePath: string) => {
-  if (compareMethod === "size") {
-    const stats1 = await fs.stat(path.join(root1, filePath));
-    const stats2 = await fs.stat(path.join(root2, filePath));
-    if (stats1.size !== stats2.size) {
-      log.info(`File ${filePath} is different in size`);
-      differentItems++;
-    }
+export const compareFiles = async (fileA: string, fileB: string, method: string) => {
+  if (method === "size") {
+    const stats1 = await fs.stat(fileA);
+    const stats2 = await fs.stat(fileB);
+    return stats1.size === stats2.size;
   }
 
-  if (compareMethod === "hash") {
-    const hash1 = hashFile(path.join(root1, filePath));
-    const hash2 = hashFile(path.join(root2, filePath));
-    if ((await hash1) !== (await hash2)) {
-      log.info(`File ${filePath} is different in hash`);
-      differentItems++;
-    }
+  if (method === "datesize") {
+    const stats1 = await fs.stat(fileA);
+    const stats2 = await fs.stat(fileB);
+    return stats1.size === stats2.size && stats1.mtimeMs === stats2.mtimeMs;
+  }
+
+  if (method === "hash") {
+    const hash1 = hashFile(fileA);
+    const hash2 = hashFile(fileB);
+    return (await hash1) === (await hash2);
+  }
+
+  return true;
+};
+
+const compareAtPath = async (filePath: string) => {
+  if (!(await compareFiles(path.join(root1, filePath), path.join(root2, filePath), compareMethod))) {
+    log.info(`File ${filePath} is different`);
+    differentItems++;
   }
 };
 
@@ -74,7 +83,7 @@ const traverseFolder = async (folder: string) => {
     if (stats.isDirectory()) {
       await traverseFolder(filePath);
     } else {
-      await compareFile(filePath);
+      await compareAtPath(filePath);
     }
   }
 
