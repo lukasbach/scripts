@@ -1,6 +1,8 @@
 /**
  * Set's up the configuration file for this repo so that this project comes up in my list of projects on lukasbach.com
+ *
  * Only works for repositories hosted in the github.com/lukasbach account.
+ *
  * @private
  */
 
