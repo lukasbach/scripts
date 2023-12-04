@@ -14,7 +14,7 @@ export const runScript = async (script: string) => {
   );
 
   if (!resolvedScript) {
-    throw new Error(`Could not find script ${script}`);
+    log.exit(`Could not find script ${script}`);
   }
 
   await import(`../scripts/${resolvedScript}.js`);

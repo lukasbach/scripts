@@ -1,4 +1,5 @@
 import { execaCommand } from "execa";
+import deepmerge from "deepmerge";
 
 export const getPackageRoot = async () => {
   const root = await utils.goUpTree((dir) => fs.exists(path.join(dir, "package.json")));
@@ -16,7 +17,7 @@ export const getPackageJson = async () => {
 
 export const amendPackageJson = async (amend: object) => {
   log.muted(`Amending package.json`);
-  const newValue = { ...(await getPackageJson()), ...amend };
+  const newValue = deepmerge.all([await getPackageJson(), amend]);
   await fs.writeJson(path.join(await getPackageRoot(), "package.json"), newValue, { spaces: 2 });
 };
 

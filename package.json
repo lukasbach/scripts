@@ -25,11 +25,12 @@
     "start": "esno ./src/core/run.ts",
     "build": "tsc",
     "build:docs": "yarn start internal/generate-script-documentation -d ./docs",
-    "lint": "eslint . --fix",
+    "lint": "eslint .",
     "lint:test": "eslint .",
     "prepublishOnly": "yarn build",
     "clean": "rimraf ./lib/ ./exec/",
-    "release": "publish-fast"
+    "release": "publish-fast",
+    "lint:fix": "eslint . --fix"
   },
   "dependencies": {
     "@microsoft/tsdoc": "^0.14.2",
