@@ -1,3 +1,8 @@
+/**
+ * Edit shortcuts for any scripts supported by @lukasbach/scripts that can later be used instead of
+ * the full script name. If the shortcuts file doesn't exist yet, it will be offered to be created.
+ */
+
 import inquirer from "inquirer";
 
 if (!(await fs.exists(utils.getShortcutsFile()))) {

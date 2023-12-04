@@ -1,6 +1,6 @@
 /**
  * Compares two files to check if they are different. Supports
- * comparing files based on either file size or file hash. For hashing, SHA1 is used
+ * comparing files based on either file size, file size and edit date or file hash. For hashing, SHA1 is used
  * which is fast and works well for large files.
  */
 

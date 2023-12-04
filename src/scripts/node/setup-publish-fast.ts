@@ -2,6 +2,9 @@
 
 await utils.node.addDevDependency("publish-fast");
 await utils.node.amendPackageJson({
+  scripts: {
+    release: "publish-fast",
+  },
   publishConfig: {
     access: "public",
   },

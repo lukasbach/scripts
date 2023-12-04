@@ -1,3 +1,5 @@
+/** @internal */
+
 const a = {};
 
 log.verbose("verbose text", a);

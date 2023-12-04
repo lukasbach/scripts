@@ -5,6 +5,10 @@ export const info = (...args: any[]) => {
   console.log(chalk.blueBright("info"), ...args);
 };
 
+export const muted = (...args: any[]) => {
+  console.log(`${chalk.gray("...")} `, ...args.map((arg) => (typeof arg === "string" ? chalk.dim(arg) : arg)));
+};
+
 export const verbose = (...args: any[]) => {
   if (global.args.v || global.args.verbose) {
     console.log(chalk.dim("verbose"), ...args);

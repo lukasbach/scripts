@@ -8,7 +8,7 @@
 import chalk from "chalk";
 
 const githubUser = (await $`gh api user --jq .login`).stdout.trim();
-const events: any[] = JSON.parse((await $`gh api /users/${githubUser}/events --paginate`).stdout.trim());
+const events: any[] = JSON.parse((await $`gh api /users/${githubUser}/events`).stdout.trim());
 const relevantEvents = events
   .filter((e) => ["PushEvent"].includes(e.type))
   .filter((e) => !e.payload.ref.includes("gh-pages"));
@@ -34,6 +34,8 @@ for (const event of relevantEvents) {
   }
 
   const key = `${event.repo.name}:${event.payload.ref}`;
+
+  // TODO get data about pr on that ref, and dont show if pr is merged
 
   if (foundOptions.has(key)) {
     continue;

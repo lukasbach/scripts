@@ -33,7 +33,7 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 global.scriptsRoot = path.join(dirname, "../scripts");
 
-const shortcuts = await fs.default.readJSON(utils.getShortcutsFile());
+const shortcuts = await fs.default.readJSON(utils.getShortcutsFile()).catch(() => ({}));
 
 if (!script) {
   await utils.runScript("find");

@@ -1,7 +1,7 @@
 /**
  * Compares two folders and lists missing items and files that are different. Supports
- * comparing files based on either file size or file hash. For hashing, SHA1 is used
- * which is fast and works well for large files.
+ * comparing files based on either file size, file size and edit date or file hash. For
+ * hashing, SHA1 is used which is fast and works well for large files.
  *
  * You might want to use the verbose flag (-v) for folders with many large items to keep
  * track of progress.
