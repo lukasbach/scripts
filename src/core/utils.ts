@@ -51,3 +51,7 @@ export const assert = (condition: boolean, message: string) => {
 };
 
 export const isNotNull = <T>(x: T | null): x is T => x !== null;
+
+export const getShortcutsFile = () => {
+  return path.join(os.homedir(), ".ldo-shortcuts.json");
+};
