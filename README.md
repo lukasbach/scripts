@@ -26,7 +26,7 @@ ldo react/fc
 
 Some scripts also have shortcuts. For example, the `react/fc` script can also be run with `ldo fc`.
 You can edit shortcuts with `ldo edit-shortcuts`. All shortcuts that are available by default
-are listed in the [shortcuts.md](./shortcuts.md) file.
+are listed in the [Shortcuts Page](https://scripts.lukasbach.com/shortcuts).
 
 It is also possible to call the script without any parameters, and it will interactively search all
 available scripts.
