@@ -30,3 +30,5 @@ are listed in the [shortcuts.md](./shortcuts.md) file.
 
 It is also possible to call the script without any parameters, and it will interactively search all
 available scripts.
+
+![ldo.gif](assets/ldo.gif)
