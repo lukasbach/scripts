@@ -13,7 +13,7 @@ import inquirer from "inquirer";
 import * as ask from "./ask.js";
 import * as log from "./log.js";
 import * as utils from "./utils.js";
-import { defaultShortcuts } from "./shortcuts";
+import { defaultShortcuts } from "./shortcuts.js";
 
 inquirer.registerPrompt("autocomplete", inquirerPrompt);
 
