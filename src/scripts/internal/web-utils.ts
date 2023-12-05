@@ -1,6 +1,7 @@
 /** @internal */
 import * as marked from "marked";
 import { ScriptData } from "./utils.js";
+import { defaultShortcuts } from "../../core/shortcuts.js";
 
 export const getSidebarHtml = (scripts: ScriptData[]): string => {
   const scriptLinks = scripts
@@ -11,7 +12,9 @@ export const getSidebarHtml = (scripts: ScriptData[]): string => {
     .join("\n");
 
   return (
-    `<a href="/"><div class="sidebar-head">@lukasbach/scripts</div></a><ul>${scriptLinks}</ul>` +
+    `<a href="/"><div class="sidebar-head">@lukasbach/scripts</div></a>` +
+    `<ul><li><a href="/shortcuts">Shortcuts</a></ul>` +
+    `<ul>${scriptLinks}</ul>` +
     `<ul><li><a target="_blank" href="https://github.com/lukasbach/scripts">GitHub Repo</a></li>` +
     `<li><a target="_blank" href="https://lukasbach.com">lukasbach.com</a></li></ul>`
   );
@@ -34,6 +37,12 @@ export const getScriptPageHtml = (script: ScriptData) => {
   content += `<p>You can call the script directly if you have installed it globally:</p>`;
   content += `<pre><code>npm i -g @lukasbach/scripts\nldo ${script.command}</code></pre>`;
 
+  const shortcuts = Object.entries(defaultShortcuts).find(([, value]) => value === script.command);
+  if (shortcuts) {
+    content += `<p>There is a default shortcut for this script: <code>ldo ${shortcuts[0]}</code></p>`;
+    content += `<p>You can customize shortcuts with <code>ldo edit-shortcuts</code>.</p>`;
+  }
+
   if (script.args.length > 0) {
     content += `<h2>Arguments</h2><ul>${argsRows}</ul>`;
   }
@@ -50,6 +59,18 @@ export const getScriptPageHtml = (script: ScriptData) => {
   content += `<h2>Script source</h2><pre><code>${script.code}</code></pre>`;
 
   return content;
+};
+
+export const getShortcutsHtml = () => {
+  const shortcuts = Object.entries(defaultShortcuts).map(([shortcut, script]) => {
+    return `<li><code>ldo ${shortcut}</code>: <a href="/${script}"><code>${script}</code></a></li>`;
+  });
+  return (
+    `<h1>Shortcuts</h1>` +
+    `<p>The following shortcuts are available for commands that are more commonly used.</p>` +
+    `<p>You can customize shortcuts with <code>ldo edit-shortcuts</code></p>` +
+    `<ul>${shortcuts.join("\n")}</ul>`
+  );
 };
 
 export const getContainerHtml = (allScripts: ScriptData[], title: string, content: string) => {

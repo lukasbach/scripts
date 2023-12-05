@@ -5,4 +5,4 @@
 - readme creator
 - build setup scripts
 - packagejson/github metadata fixer
-- 
+- markdown bulk formatter with https://www.npmjs.com/package/@quilicicf/markdown-formatter

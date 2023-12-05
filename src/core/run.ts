@@ -13,6 +13,7 @@ import inquirer from "inquirer";
 import * as ask from "./ask.js";
 import * as log from "./log.js";
 import * as utils from "./utils.js";
+import { defaultShortcuts } from "./shortcuts";
 
 inquirer.registerPrompt("autocomplete", inquirerPrompt);
 
@@ -33,7 +34,7 @@ const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 global.scriptsRoot = path.join(dirname, "../scripts");
 
-const shortcuts = await fs.default.readJSON(utils.getShortcutsFile()).catch(() => ({}));
+const shortcuts = await fs.default.readJSON(utils.getShortcutsFile()).catch(() => defaultShortcuts);
 
 if (!script) {
   await utils.runScript("find");

@@ -4,22 +4,14 @@
  */
 
 import inquirer from "inquirer";
+import { defaultShortcuts } from "../core/shortcuts.js";
 
 if (!(await fs.exists(utils.getShortcutsFile()))) {
   if (!(await ask.confirm(`Shortcuts config file ${utils.getShortcutsFile()} doesn't exist yet, create it?`))) {
     log.exit("Aborting");
   }
 
-  await fs.writeJson(
-    utils.getShortcutsFile(),
-    {
-      fc: "react/fc",
-      fcp: "react/fcprops",
-      forwardref: "react/forwardref",
-      "package-setup": "node/yarn-nodemodules, node/configure-npm-repo, node/volta, node/setup-eslint",
-    },
-    { spaces: 2 }
-  );
+  await fs.writeJson(utils.getShortcutsFile(), defaultShortcuts, { spaces: 2 });
 }
 
 const { shortcuts } = await inquirer.prompt({
