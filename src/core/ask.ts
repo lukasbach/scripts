@@ -1,4 +1,4 @@
-import inquirer from "inquirer";
+import inquirer, { DistinctChoice } from "inquirer";
 
 let argCounter = 0;
 
@@ -20,10 +20,20 @@ export const text = async (keys: string, message: string, defaultValue?: string)
   return getFromArgs(keys) ?? (await inquirer.prompt({ message, default: defaultValue, name: "v" })).v;
 };
 
-export const choice = async <T extends string>(
+export const path = async (
   keys: string,
   message: string,
-  choices: T[],
+  defaultValue?: string,
+  fileExtensions?: string[]
+): Promise<string> => {
+  // TODO
+  return getFromArgs(keys) ?? (await inquirer.prompt({ message, default: defaultValue, name: "v" })).v;
+};
+
+export const choice = async <T extends string = string>(
+  keys: string,
+  message: string,
+  choices: Array<DistinctChoice>,
   defaultValue?: string
 ): Promise<T> => {
   return (
@@ -34,7 +44,22 @@ export const choice = async <T extends string>(
         message,
         default: defaultValue,
         choices,
-        source: (_, input) => choices.filter((c) => !input || c.toLowerCase().includes(input?.toLowerCase())),
+        source: (_, input) =>
+          choices.filter((c) => {
+            if (!input) {
+              return true;
+            }
+            if (typeof c === "string") {
+              return c.toLowerCase().includes(input.toLowerCase());
+            }
+            if ("name" in c && c.name) {
+              return c.name.toLowerCase().includes(input.toLowerCase());
+            }
+            if ("value" in c && c.value) {
+              return c.value.toLowerCase().includes(input.toLowerCase());
+            }
+            return false;
+          }),
         name: "v",
       } as any)
     ).v
@@ -44,6 +69,21 @@ export const choice = async <T extends string>(
 export const confirm = async (message: string, defaultValue?: string): Promise<boolean> => {
   return (
     getFromArgs("y,yes") ?? (await inquirer.prompt({ type: "confirm", message, default: defaultValue, name: "v" })).v
+  );
+};
+
+export const bool = async (keys: string, message: string, defaultValue?: string): Promise<boolean> => {
+  return (
+    getFromArgs(keys) ??
+    (
+      await inquirer.prompt({
+        type: "list",
+        message,
+        default: defaultValue,
+        choices: ["Yes", "No"],
+        name: "v",
+      } as any)
+    ).v === "Yes"
   );
 };
 
