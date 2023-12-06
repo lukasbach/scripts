@@ -3,7 +3,9 @@
 
 await utils.cd(await utils.node.getPackageRoot());
 
-const parentTsconfig = await utils.goUpTree((dir) => fs.pathExists(path.join(dir, "tsconfig.json")));
+const parentTsconfig = await utils.goUpTree(
+  (dir) => dir !== process.cwd() && fs.pathExists(path.join(dir, "tsconfig.json"))
+);
 if (parentTsconfig) {
   if (await ask.bool("", `A parent tsconfig exists at ${parentTsconfig}, reference that?`, "Yes")) {
     await fs.writeJSON("./tsconfig.json", {
@@ -40,7 +42,7 @@ const target = await ask.choice(
   "target,t",
   "Which target to compile to? Most browsers today support ES6. Node 16 supports ES2021.",
   ["es3", "es5", "es6", "es2016", "es2017", "es2018", "es2019", "es2020", "es2021", "es2022", "esnext"],
-  "es6"
+  module === "nodenext" ? "es2021" : "es6"
 );
 
 const lib = await ask.choice(
@@ -54,36 +56,40 @@ const emit = await ask.choice(
   "emit",
   "What to emit?",
   ["Nothing", "Source", "Source and Declaration", "Source, Declaration and Source Maps"],
-  target
+  "Source and Declaration"
 );
 
 const strict = await ask.bool("strict,s", "Strict mode?", "Yes");
 
 const outDir = await ask.text("output,o", "Output directory?", "lib");
 
-await fs.writeJSON("./tsconfig.json", {
-  $schema: "https://json.schemastore.org/tsconfig",
-  compilerOptions: {
-    module,
-    moduleResolution,
-    target,
-    esModuleInterop: true,
-    allowSyntheticDefaultImports: true,
-    lib: lib.split(", "),
-    outDir,
-    ...(strict ? { strict: true } : {}),
-    ...(emit === "Nothing" ? { noEmit: true } : {}),
-    ...(emit === "Source and Declaration" ? { declaration: true } : {}),
-    ...(emit === "Declaration and Source Maps" ? { declaration: true, sourceMap: true } : {}),
+await fs.writeJSON(
+  "./tsconfig.json",
+  {
+    $schema: "https://json.schemastore.org/tsconfig",
+    compilerOptions: {
+      module,
+      moduleResolution,
+      target,
+      esModuleInterop: true,
+      allowSyntheticDefaultImports: true,
+      lib: lib.split(", "),
+      outDir,
+      ...(strict ? { strict: true } : {}),
+      ...(emit === "Nothing" ? { noEmit: true } : {}),
+      ...(emit === "Source and Declaration" ? { declaration: true } : {}),
+      ...(emit === "Declaration and Source Maps" ? { declaration: true, sourceMap: true } : {}),
+    },
+    include: ["src"],
   },
-  include: ["src"],
-});
+  { spaces: 2 }
+);
 
 if (pureEsm) {
   await utils.node.amendPackageJson({
     type: "module",
     main: undefined,
-    exports: path.relative(process.cwd(), path.join(outDir, "index.js")),
+    exports: `./${path.join(outDir, "index.js")}`,
     typings: path.join(outDir, "index.d.ts"),
     scripts: {
       build: "tsc",
