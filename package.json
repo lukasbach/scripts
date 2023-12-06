@@ -87,7 +87,7 @@
     ]
   },
   "publish": {
-    "preScripts": "build,build:docs,lint:test",
+    "preScripts": "build,lint:test",
     "npmAccess": "public"
   }
 }

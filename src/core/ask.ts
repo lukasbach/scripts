@@ -24,6 +24,7 @@ export const path = async (
   keys: string,
   message: string,
   defaultValue?: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fileExtensions?: string[]
 ): Promise<string> => {
   // TODO
