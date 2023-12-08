@@ -19,11 +19,8 @@ const email = (await $`git config --global user.email`).stdout;
 const author = await ask.text("a,author", "What is the author of the package?", `${userName} <${email}>`);
 const license = await ask.text("l,license", "What is the license of the package?", packageJson.license);
 
-if (!(await ask.confirm("The values will both be synced to the package.json and the Github Repo configuration."))) {
-  process.exit(0);
-}
-
-const repository = (await $`git config --get remote.origin.url`).stdout;
+const repositoryPromise = $`git config --get remote.origin.url`.catch(() => undefined);
+const repository = (await repositoryPromise)?.stdout;
 
 await utils.node.amendPackageJson({
   name,
@@ -34,5 +31,7 @@ await utils.node.amendPackageJson({
   repository,
 });
 
-await $`gh repo edit --add-topic=${topics.join(",")}`;
-await $`gh repo edit --description=${description}`;
+if (repository && (await ask.confirm("Do you want to sync topics and description to Github?"))) {
+  await $`gh repo edit --add-topic=${topics.join(",")}`;
+  await $`gh repo edit --description=${description}`;
+}

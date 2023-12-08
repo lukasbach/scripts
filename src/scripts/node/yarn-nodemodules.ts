@@ -2,7 +2,7 @@
 
 const packageRoot = await utils.node.getPackageRoot();
 
-const gitignore = `${(await fs.readFile(path.join(packageRoot, ".gitignore"), "utf-8")) ?? ""}
+const gitignore = `${(await utils.maybeReadTextFile(path.join(packageRoot, ".gitignore"))) ?? ""}
 .pnp.*
 .yarn/*
 !.yarn/patches

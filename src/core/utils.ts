@@ -19,6 +19,8 @@ export const runScript = async (script: string, options?: Record<string, any> & 
 
   const oldArguments = global.args;
 
+  log.info(`Running: ${resolvedScript}`);
+
   global.args = { ...oldArguments, ...options, _: options?.arguments ?? [] };
   await import(`../scripts/${resolvedScript}.js`);
   global.args = oldArguments;
@@ -39,6 +41,8 @@ export const amendFile = async (file: string, amend: (content: string) => string
   const newContent = await amend(content);
   await global.fs.writeFile(file, newContent);
 };
+
+export const maybeReadTextFile = async (file: string) => fs.readFile(file, "utf-8").catch(() => null);
 
 export const goUpTree = async (checkDir: (dir: string) => Promise<boolean> | boolean, startDir = process.cwd()) => {
   let dir = startDir;

@@ -113,6 +113,7 @@ if (pureEsm) {
     engines: {
       node: ">=16",
     },
+    files: [path.join(outDir, "**/*"), `!${path.join(outDir, "**/*.spec.js")}`, "src/**/*"],
   });
 }
 
@@ -120,3 +121,6 @@ await utils.amendFile("./.gitignore", (old) => `${old}\n${outDir}`);
 await utils.runScript("deduplicate-gitignore", { file: "./.gitignore" });
 
 await utils.node.addDevDependency("typescript@latest");
+if (module === "nodenext") {
+  await utils.node.addDevDependency("@types/node");
+}
