@@ -35,7 +35,7 @@ const moduleResolution = await ask.choice(
     { name: "Bundler - Use for projects using a seperate bundler", value: "bundler" },
     { name: "NodeNext - Use for node.js projects", value: "nodenext" },
   ],
-  "esnext"
+  "bundler"
 );
 
 const target = await ask.choice(
