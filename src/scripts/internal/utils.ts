@@ -2,6 +2,7 @@
 
 import { TSDocParser, DocNode, DocExcerpt } from "@microsoft/tsdoc";
 import deepmerge from "deepmerge";
+import pathLib from "path";
 
 export class Formatter {
   public static renderDocNode(docNode: DocNode): string {
@@ -27,8 +28,8 @@ export class Formatter {
 }
 
 export const getScriptPaths = async () => {
-  utils.cd(await utils.node.getPackageRoot());
-  let scripts = await glob("src/scripts/**/*.ts");
+  let scripts = await glob("src/scripts/**/*.ts", { cwd: pathLib.win32.join(global.scriptsRoot, "../..") });
+  scripts = scripts.map((s) => pathLib.join(global.scriptsRoot, "../..", s));
   scripts = scripts.filter(
     (s) => !scripts.includes(path.join(path.dirname(s), "index.ts")) || path.basename(s) === "index.ts"
   );
@@ -54,7 +55,7 @@ export const resolveScriptData = async (scripts: string[]) => {
         const imports = [...code.matchAll(/utils.runScript\(\s*["'`]([^"'`]+)["'`]\s*\)/g)].map((t) => t[1]);
         const command = script
           .replace(/\\/g, "/")
-          .replace(/^src\/scripts\//, "")
+          .replace(/.*src\/scripts\//, "")
           .replace(/\.ts$/, "")
           .replace(/\/index$/, "");
         return {
