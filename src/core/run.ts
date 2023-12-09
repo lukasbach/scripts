@@ -19,8 +19,8 @@ inquirer.registerPrompt("autocomplete", inquirerPrompt);
 
 const argv = await yargs(hideBin(process.argv)).help(false).argv;
 const [script, ...args] = argv._;
-
 global.args = { ...argv, _: args };
+
 global.$ = execa.$;
 global.fs = fs.default as any;
 global.path = path.posix;
@@ -49,4 +49,4 @@ if (script in shortcuts) {
   process.exit(0);
 }
 
-await utils.runScript(`${script}`);
+await utils.runScript(`${script}`, global.args);

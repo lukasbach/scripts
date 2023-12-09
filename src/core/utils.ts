@@ -21,7 +21,7 @@ export const runScript = async (script: string, options?: Record<string, any> & 
 
   log.info(`Running: ${resolvedScript}`);
 
-  global.args = { ...oldArguments, ...options, _: options?.arguments ?? [] };
+  global.args = { ...oldArguments, ...options, _: options?.arguments ?? options?._ ?? [] };
   await import(`../scripts/${resolvedScript}.js`);
   global.args = oldArguments;
 };
