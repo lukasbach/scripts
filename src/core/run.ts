@@ -44,7 +44,7 @@ if (!script) {
 if (script in shortcuts) {
   const resolvedScripts = shortcuts[script].split(",").map((s) => s.trim());
   for (const resolvedScript of resolvedScripts) {
-    await utils.runScript(resolvedScript);
+    await utils.runScript(resolvedScript, global.args);
   }
   process.exit(0);
 }
