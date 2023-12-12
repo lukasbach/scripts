@@ -1,6 +1,7 @@
 /** @internal */
 
 import { marked } from "marked";
+import * as path from "path";
 import { getScriptPaths, resolveScriptData } from "./utils.js";
 import { getContainerHtml, getScriptPageHtml, getShortcutsHtml } from "./web-utils.js";
 
