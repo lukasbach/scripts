@@ -1231,6 +1231,7 @@ __metadata:
     npm-run-all: ^4.1.5
     publish-fast: ^0.0.18
     rimraf: ^3.0.2
+    simple-git: ^3.21.0
     terminal-link: ^3.0.0
     typescript: ^5.3.2
     yargs: ^17.7.2
@@ -6522,6 +6523,17 @@ __metadata:
     "@kwsites/promise-deferred": "npm:^1.1.1"
     debug: "npm:^4.3.4"
   checksum: 977a05cb0b5087296348b5afa682ce552f43234f5fd29b44c3d7f56b3682d10dcb03752a418e508aaffcbdb6ea2e304a3ef10095197d6743d2353adb85f32592
+  languageName: node
+  linkType: hard
+
+"simple-git@npm:^3.21.0":
+  version: 3.21.0
+  resolution: "simple-git@npm:3.21.0"
+  dependencies:
+    "@kwsites/file-exists": ^1.1.1
+    "@kwsites/promise-deferred": ^1.1.1
+    debug: ^4.3.4
+  checksum: e992d2ac5905c19d385ebb8575db92886c93e677acfb9edb28a842d05b7a3974ef34cc26ccb8057144099a1c5875070867456787aef5bf641a99ebfb9ef656bf
   languageName: node
   linkType: hard
 

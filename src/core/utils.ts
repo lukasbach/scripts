@@ -33,6 +33,7 @@ export const replaceTemplateText = (template: string, vars: Record<string, any>)
 };
 
 export const cd = (dir: string) => {
+  log.muted(`cd ${dir}`);
   process.chdir(dir);
 };
 
