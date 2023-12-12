@@ -7,6 +7,7 @@ import { getContainerHtml, getScriptPageHtml, getShortcutsHtml } from "./web-uti
 
 const scriptData = await resolveScriptData(await getScriptPaths());
 const target = await ask.text("dest,d", "Where should the documentation be stored?", "./docs");
+await fs.ensureDir(target);
 
 for (const script of Object.keys(scriptData)) {
   const html = getContainerHtml(
