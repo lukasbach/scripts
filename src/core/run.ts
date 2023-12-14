@@ -21,6 +21,12 @@ const argv = await yargs(hideBin(process.argv)).help(false).argv;
 const [script, ...args] = argv._;
 global.args = { ...argv, _: args };
 
+if (Object.values(global.args).some((v: any) => v.toString().includes('"'))) {
+  log.warn(
+    'Argument found that included a " character. If args were not parsed incorrectly, try escaping the second quote with a backslash (https://github.com/nodejs/node/issues/21854#issuecomment-405671104)'
+  );
+}
+
 global.$ = execa.$;
 global.fs = fs.default as any;
 global.path = path.posix;

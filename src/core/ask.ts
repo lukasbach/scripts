@@ -6,9 +6,11 @@ const getFromArgs = (keys: string): any | undefined => {
   for (const key of keys.split(",")) {
     if (key === "_") {
       argCounter++;
+      log.verbose(`Arg ${argCounter - 1} is "${args._[argCounter - 1]}"`);
       return args._[argCounter - 1];
     }
     if (args[key]) {
+      log.verbose(`Arg ${key} is "${args[key]}"`);
       return args[key];
     }
   }

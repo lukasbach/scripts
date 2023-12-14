@@ -15,8 +15,10 @@ const compareMethod = await ask.choice("compare,c", "How should files be compare
 let missingItems1 = 0;
 let missingItems2 = 0;
 let differentItems = 0;
+let comparisons = 0;
 
 const compareAtPath = async (filePath: string) => {
+  comparisons++;
   if (!(await compareFiles(path.join(root1, filePath), path.join(root2, filePath), compareMethod))) {
     log.info(`File ${filePath} is different`);
     differentItems++;
@@ -56,4 +58,9 @@ await traverseFolder("");
 
 log.info(`${missingItems1} items missing in folder 1, ${missingItems2} items missing in folder 2`);
 log.info(`${differentItems} items are different`);
+log.info(`${comparisons} files compared`);
 log.info(`${compareErrors} errors occured while creating file hashes.`);
+
+if (missingItems1 === 0 && missingItems2 === 0 && differentItems === 0) {
+  log.success("Folders are identical");
+}

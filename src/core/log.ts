@@ -1,6 +1,10 @@
 /* eslint-disable no-console */
 import chalk from "chalk";
 
+export function success(...args: any[]) {
+  console.log(chalk.greenBright("success"), ...args);
+}
+
 export const info = (...args: any[]) => {
   console.log(chalk.blueBright("info"), ...args);
 };
