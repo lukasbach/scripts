@@ -2,7 +2,11 @@ import inquirer, { DistinctChoice } from "inquirer";
 
 let argCounter = 0;
 
-const getFromArgs = (keys: string): any | undefined => {
+const getFromArgs = (keys: string | null): any | undefined => {
+  if (!keys) {
+    return undefined;
+  }
+
   for (const key of keys.split(",")) {
     if (key === "_") {
       argCounter++;
@@ -18,7 +22,7 @@ const getFromArgs = (keys: string): any | undefined => {
   return undefined;
 };
 
-export const text = async (keys: string, message: string, defaultValue?: string): Promise<string> => {
+export const text = async (keys: string | null, message: string, defaultValue?: string): Promise<string> => {
   return getFromArgs(keys) ?? (await inquirer.prompt({ message, default: defaultValue, name: "v" })).v;
 };
 
@@ -34,7 +38,7 @@ export const path = async (
 };
 
 export const choice = async <T extends string = string>(
-  keys: string,
+  keys: string | null,
   message: string,
   choices: Array<DistinctChoice>,
   defaultValue?: string
@@ -63,6 +67,26 @@ export const choice = async <T extends string = string>(
             }
             return false;
           }),
+        name: "v",
+      } as any)
+    ).v
+  );
+};
+
+export const multiChoice = async <T extends string = string>(
+  keys: string | null,
+  message: string,
+  choices: Array<DistinctChoice>,
+  defaultValue?: string
+): Promise<T[]> => {
+  return (
+    getFromArgs(keys) ??
+    (
+      await inquirer.prompt({
+        type: "checkbox",
+        message,
+        default: defaultValue,
+        choices,
         name: "v",
       } as any)
     ).v
