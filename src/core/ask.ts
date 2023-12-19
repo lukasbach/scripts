@@ -115,7 +115,9 @@ export const bool = async (keys: string, message: string, defaultValue?: string)
 };
 
 export const number = async (keys: string, message: string, defaultValue?: string): Promise<number> => {
-  return getFromArgs(keys) ?? (await inquirer.prompt({ type: "number", message, default: defaultValue, name: "v" })).v;
+  const v =
+    getFromArgs(keys) ?? (await inquirer.prompt({ type: "number", message, default: defaultValue, name: "v" })).v;
+  return parseFloat(v);
 };
 
 export const editor = async (keys: string, message: string, defaultValue?: string): Promise<string> => {
