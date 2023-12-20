@@ -29,7 +29,7 @@ for (const file of files) {
   log.verbose(`Compressing ${file} to ${newTarget}`);
   utils.assert(!(await fs.exists(newTarget)), `Output file ${newTarget} already exist!`);
   await fs.ensureDir(path.dirname(newTarget));
-  const command = `ffmpeg -i ${file} -vcodec libx265 -crf ${crf} ${frString} ${newTarget}`;
+  const command = `ffmpeg -i "${file}" -vcodec libx265 -crf ${crf} ${frString} "${newTarget}"`;
   log.verbose("running", command);
   await $({ stdio: "inherit" })`${command}`;
 }
