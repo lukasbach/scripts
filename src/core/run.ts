@@ -58,3 +58,6 @@ if (script in shortcuts) {
 }
 
 await utils.runScript(`${script}`, global.args);
+log.muted(`Script finished. Run the following the run again with the same parameters:`);
+// eslint-disable-next-line no-underscore-dangle
+log.muted(ask._rebuildCommand(script as string));

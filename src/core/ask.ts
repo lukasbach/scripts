@@ -1,6 +1,7 @@
 import inquirer, { DistinctChoice } from "inquirer";
 
 let argCounter = 0;
+const registeredAnswers: Record<string, any> = { _: [] };
 
 const getFromArgs = (keys: string | null): any | undefined => {
   if (!keys) {
@@ -22,8 +23,34 @@ const getFromArgs = (keys: string | null): any | undefined => {
   return undefined;
 };
 
+const registerAnswer = (keys: string | null, value: string): void => {
+  if (!keys) {
+    return;
+  }
+
+  const key = keys.split(",").sort((a, b) => a.length - b.length)[0];
+  if (key === "_") {
+    registeredAnswers._.push(value);
+    return;
+  }
+  registeredAnswers[key] = value;
+};
+
+// eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle
+export const _rebuildCommand = (cmdName: string) => {
+  const keys = Object.keys(registeredAnswers).filter((k) => k !== "_");
+  const args = keys.map((k) => {
+    if (registeredAnswers[k] === false) return "";
+    const value = registeredAnswers[k] === true ? "" : registeredAnswers[k];
+    return `-${k.length > 1 ? "-" : ""}${k} ${value}`;
+  });
+  return `ldo ${cmdName} ${registeredAnswers._.join(" ")} ${args.join(" ")}`;
+};
+
 export const text = async (keys: string | null, message: string, defaultValue?: string): Promise<string> => {
-  return getFromArgs(keys) ?? (await inquirer.prompt({ message, default: defaultValue, name: "v" })).v;
+  const value = getFromArgs(keys) ?? (await inquirer.prompt({ message, default: defaultValue, name: "v" })).v;
+  registerAnswer(keys, value);
+  return value;
 };
 
 export const path = async (
@@ -34,7 +61,9 @@ export const path = async (
   fileExtensions?: string[]
 ): Promise<string> => {
   // TODO
-  return getFromArgs(keys) ?? (await inquirer.prompt({ message, default: defaultValue, name: "v" })).v;
+  const value = getFromArgs(keys) ?? (await inquirer.prompt({ message, default: defaultValue, name: "v" })).v;
+  registerAnswer(keys, value);
+  return value;
 };
 
 export const choice = async <T extends string = string>(
@@ -43,7 +72,7 @@ export const choice = async <T extends string = string>(
   choices: Array<DistinctChoice>,
   defaultValue?: string
 ): Promise<T> => {
-  return (
+  const value =
     getFromArgs(keys) ??
     (
       await inquirer.prompt({
@@ -69,8 +98,9 @@ export const choice = async <T extends string = string>(
           }),
         name: "v",
       } as any)
-    ).v
-  );
+    ).v;
+  registerAnswer(keys, value);
+  return value;
 };
 
 export const multiChoice = async <T extends string = string>(
@@ -79,8 +109,8 @@ export const multiChoice = async <T extends string = string>(
   choices: Array<DistinctChoice>,
   defaultValue?: string
 ): Promise<T[]> => {
-  return (
-    getFromArgs(keys) ??
+  const value =
+    getFromArgs(keys)?.split(",") ??
     (
       await inquirer.prompt({
         type: "checkbox",
@@ -89,8 +119,9 @@ export const multiChoice = async <T extends string = string>(
         choices,
         name: "v",
       } as any)
-    ).v
-  );
+    ).v;
+  registerAnswer(keys, value.join(","));
+  return value;
 };
 
 export const confirm = async (message: string, defaultValue?: string): Promise<boolean> => {
@@ -100,7 +131,7 @@ export const confirm = async (message: string, defaultValue?: string): Promise<b
 };
 
 export const bool = async (keys: string, message: string, defaultValue?: string): Promise<boolean> => {
-  return (
+  const value =
     getFromArgs(keys) ??
     (
       await inquirer.prompt({
@@ -110,16 +141,21 @@ export const bool = async (keys: string, message: string, defaultValue?: string)
         choices: ["Yes", "No"],
         name: "v",
       } as any)
-    ).v === "Yes"
-  );
+    ).v === "Yes";
+  registerAnswer(keys, value);
+  return value;
 };
 
 export const number = async (keys: string, message: string, defaultValue?: string): Promise<number> => {
   const v =
     getFromArgs(keys) ?? (await inquirer.prompt({ type: "number", message, default: defaultValue, name: "v" })).v;
+  registerAnswer(keys, v);
   return parseFloat(v);
 };
 
 export const editor = async (keys: string, message: string, defaultValue?: string): Promise<string> => {
-  return getFromArgs(keys) ?? (await inquirer.prompt({ type: "editor", message, default: defaultValue, name: "v" })).v;
+  const value =
+    getFromArgs(keys) ?? (await inquirer.prompt({ type: "editor", message, default: defaultValue, name: "v" })).v;
+  registerAnswer(keys, value);
+  return value;
 };
