@@ -20,6 +20,6 @@ declare global {
   var ask: typeof askLib;
   var utils: typeof utilsLib;
   var log: typeof logLib;
-  var glob: typeof globLib;
+  var glob: typeof globLib; // TODO multi-glob support, and patch \\ to /
   var scriptsRoot: string;
 }
