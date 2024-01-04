@@ -2,13 +2,13 @@ title: "@lukasbach/scripts"
 description: "A collection of scripts I use"
 documents:
   - "**/*.md"
-rootDocument: about/readme.MD
+rootDocument: "/about/README"
 hoistHeadings: true
 hoistMarkdownTitles: true
 headerButtons:
   - title: GitHub
     icon: FaGithub
     link: https://github.com/lukasbach/scripts
-out: ../docs-html
+out: ./docs-html
 favicon:
   source: "icon:IoTerminal"

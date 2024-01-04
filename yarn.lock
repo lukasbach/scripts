@@ -1410,7 +1410,7 @@ __metadata:
     inquirer: ^9.2.12
     inquirer-autocomplete-prompt: ^3.0.1
     jest: ^29.1.2
-    markbase: ^0.0.3
+    markbase: "file:../document-fast"
     marked: ^11.0.0
     minimist: ^1.2.8
     node-fetch: ^3.3.2
@@ -5901,9 +5901,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"markbase@npm:^0.0.3":
+"markbase@file:../document-fast::locator=%40lukasbach%2Fscripts%40workspace%3A.":
   version: 0.0.3
-  resolution: "markbase@npm:0.0.3"
+  resolution: "markbase@file:../document-fast#../document-fast::hash=8bb641&locator=%40lukasbach%2Fscripts%40workspace%3A."
   dependencies:
     commander: ^11.1.0
     favicons: ^7.1.5
@@ -5929,7 +5929,7 @@ __metadata:
     yaml: ^2.3.4
   bin:
     markbase: lib/index.js
-  checksum: 220f20eb5439d5bd34a88587c9385bfe41fe4087d210005098514fa9bbe4a25ad309654f43d5d02a68ff144c9acc5968f82deda18212a9c91f6676ecc50c9d2c
+  checksum: c0ffd8d44f90537665ff35e8fac7170985de6daf8405f7d398bc4d4d4e55aa61246f84404d7167ff944e3692093c0f7668c6ba50b316524ba79a18cfa1c11ccc
   languageName: node
   linkType: hard
 
