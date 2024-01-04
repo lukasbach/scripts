@@ -28,7 +28,7 @@ export class Formatter {
 }
 
 export const getScriptPaths = async () => {
-  let scripts = await glob("src/scripts/**/*.ts", { cwd: pathLib.win32.join(global.scriptsRoot, "../..") });
+  let scripts = await glob("src/scripts/**/*.ts", { cwd: pathLib.join(global.scriptsRoot, "../..") });
   scripts = scripts.map((s) => pathLib.join(global.scriptsRoot, "../..", s));
   scripts = scripts.filter(
     (s) => !scripts.includes(path.join(path.dirname(s), "index.ts")) || path.basename(s) === "index.ts"
