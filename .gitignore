@@ -14,4 +14,7 @@ exec
 .idea
 dist
 videos
+
+
 docs
+!docs/config.yml

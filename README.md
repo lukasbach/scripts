@@ -36,3 +36,7 @@ It is also possible to call the script without any parameters, and it will inter
 available scripts.
 
 ![Demo](https://raw.githubusercontent.com/lukasbach/scripts/main/assets/ldo.gif)
+
+## Scripts
+
+<!--scriptsstart-->

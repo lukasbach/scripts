@@ -1,93 +1,58 @@
 /** @internal */
-import * as marked from "marked";
 import { ScriptData } from "./utils.js";
 import { defaultShortcuts } from "../../core/shortcuts.js";
 
-export const getSidebarHtml = (scripts: ScriptData[]): string => {
-  const scriptLinks = scripts
-    .filter((script) => !script.isInternal)
-    .map((script) => {
-      return `<li><a href="/${script.command}">${script.command}</a></li>`;
-    })
-    .join("\n");
-
-  return (
-    `<a href="/"><div class="sidebar-head">@lukasbach/scripts</div></a>` +
-    `<ul><li><a href="/shortcuts">Shortcuts</a></ul>` +
-    `<ul>${scriptLinks}</ul>` +
-    `<ul><li><a target="_blank" href="https://github.com/lukasbach/scripts">GitHub Repo</a></li>` +
-    `<li><a target="_blank" href="https://lukasbach.com">lukasbach.com</a></li></ul>`
-  );
-};
-
-export const getScriptPageHtml = (script: ScriptData) => {
+export const getScriptPageMd = (script: ScriptData) => {
   const questionRows = script.options
     .map(({ question, keys }) => {
       const keyString = keys
         .sort((a, b) => b.length - a.length)
-        .map((k) => (k.length === 1 ? `-${k}` : `--${k}`))
+        .map((k) => (k.length === 1 ? `\`-${k}\`` : `\`--${k}\``))
         .join(", ");
-      return `<li>${keyString}: ${question}</li>`;
+      return `- ${keyString}: ${question}`;
     })
     .join("\n");
-  const argsRows = script.args.map(({ question }, i) => `<li>[${i}]: ${question}</li>`).join("\n");
+  const argsRows = script.args.map(({ question }, i) => `- \`[${i}]\`: ${question}`).join("\n");
+  const commandSplit = script.command.split("/");
 
-  let content = `<h1>${script.command}</h1><p>${marked.parse(script.summary)}</p>`;
-  content += `<h2>Usage</h2><pre><code>npx @lukasbach/scripts ${script.command}</code></pre>`;
-  content += `<p>You can call the script directly if you have installed it globally:</p>`;
-  content += `<pre><code>npm i -g @lukasbach/scripts\nldo ${script.command}</code></pre>`;
+  let content = `---\nsidebarTitle: ${commandSplit[commandSplit.length - 1]}\n---\n\n`;
+  content += `# ${script.command}\n\n${script.summary}\n\n`;
+  content += `## Usage\n\n\`\`\`bash\nnpx @lukasbach/scripts ${script.command}\n\`\`\`\n\n`;
+  content += `You can call the script directly if you have installed it globally:\n\n`;
+  content += `\`\`\`bash\nnpm i -g @lukasbach/scripts\nldo ${script.command}\n\`\`\`\n\n`;
 
   const shortcuts = Object.entries(defaultShortcuts).find(([, value]) => value === script.command);
   if (shortcuts) {
-    content += `<p>There is a default shortcut for this script: <code>ldo ${shortcuts[0]}</code></p>`;
-    content += `<p>You can customize shortcuts with <code>ldo edit-shortcuts</code>.</p>`;
+    content += `There is a default shortcut for this script: \`ldo ${shortcuts[0]}\`\n\n`;
+    content += `You can customize shortcuts with \`ldo edit-shortcuts\`.\n\n`;
   }
 
   if (script.args.length > 0) {
-    content += `<h2>Arguments</h2><ul>${argsRows}</ul>`;
+    content += `## Arguments\n\n${argsRows}\n\n`;
   }
-  content += `<h2>Options</h2><ul>${questionRows}`;
-  content += `<li>-v, --verbose: Verbose logging</li></ul>`;
-  content += `<p>You can also omit options, and will be asked for them interactively.</p>`;
-  content += `<p>Add <code>--yes</code> to skip all confirmations.</p>`;
+  content += `## Options\n\n${questionRows}`;
+  content += `\n- \`-v\`, \`--verbose\`: Verbose logging\n\n`;
+  content += `You can also omit options, and will be asked for them interactively.\n\n`;
+  content += `Add \`--yes\` to skip all confirmations.\n\n`;
   if (script.imports.length > 0) {
-    content += `<h2>Referenced scripts</h2><ul>${script.imports
-      .map((i) => `<li><a href="${i}"><code>${i}</code></a></li>`)
-      .join("\n")}</ul>`;
+    content += `## Referenced scripts\n\n${script.imports.map((i) => `- [\`${i}\`](${i})`).join("\n")}\n\n`;
   }
 
-  content += `<h2>Script source</h2><pre><code>${script.code}</code></pre>`;
+  content += `## Script source\n\n\`\`\`typescript\n${script.code}\n\`\`\`\`\n\n`;
 
   return content;
 };
 
-export const getShortcutsHtml = () => {
-  const shortcuts = Object.entries(defaultShortcuts).map(([shortcut, script]) => {
-    return `<li><code>ldo ${shortcut}</code>: <a href="/${script}"><code>${script}</code></a></li>`;
-  });
+export const getShortcutsMd = () => {
+  const shortcuts = Object.entries(defaultShortcuts)
+    .map(([shortcut, script]) => {
+      return `- \`ldo ${shortcut}\`: [\`${script}\`](/${script})`;
+    })
+    .join("\n");
   return (
-    `<h1>Shortcuts</h1>` +
-    `<p>The following shortcuts are available for commands that are more commonly used.</p>` +
-    `<p>You can customize shortcuts with <code>ldo edit-shortcuts</code></p>` +
-    `<ul>${shortcuts.join("\n")}</ul>`
+    `# Shortcuts\n\n` +
+    `The following shortcuts are available for commands that are more commonly used.\n\n` +
+    `You can customize shortcuts with \`ldo edit-shortcuts\`\n\n` +
+    `${shortcuts}`
   );
-};
-
-export const getContainerHtml = (allScripts: ScriptData[], title: string, content: string) => {
-  return `<html>
-  <head>
-    <title>${title}</title>
-    <link rel="stylesheet" href="/styles.css" />
-  </head>
-  <body>
-    <div class="sidebar">
-      ${getSidebarHtml(allScripts)}
-    </div>
-    <div class="content">
-      <div class="inner">
-        ${content}
-      </div>
-    </div>
-  </body>
-</html>`;
 };
