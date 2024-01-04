@@ -1,7 +1,7 @@
 /** Sets up a crowdin-based translation configuration for the current project. */
 
 const target = await ask.text("target,t", "Where should the translation files be stored?", "src/assets/i18n");
-const languages = await ask.text("lang,-l", "Which languages should be translated to?", "de,es,fr,it,pt");
+const languages = await ask.text("lang,l", "Which languages should be translated to?", "de,es,fr,it,pt");
 const createTest = await ask.confirm("Should a vitest based test suite be created?"); // TODO yesno
 
 await fs.ensureDir(path.join(await utils.node.getPackageRoot(), target));
