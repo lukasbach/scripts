@@ -38,7 +38,9 @@ export const getScriptPageMd = (script: ScriptData) => {
     content += `## Referenced scripts\n\n${script.imports.map((i) => `- [\`${i}\`](/${i})`).join("\n")}\n\n`;
   }
 
-  content += `## Script source\n\n\`\`\`typescript\n${script.code}\n\`\`\`\`\n\n`;
+  const sourceLink = `[View Source on GitHub](https://github.com/lukasbach/scripts/blob/main/src/scripts/${script.command}.ts)\n`;
+
+  content += `## Script source\n\n${sourceLink}\`\`\`typescript\n${script.code}\n\`\`\`\`\n\n`;
 
   return content;
 };
