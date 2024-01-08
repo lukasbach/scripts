@@ -6,4 +6,5 @@ export const defaultShortcuts = {
   fref: "react/forwardref",
   vitc: "react/vitest-component",
   vith: "react/vitest-hook",
+  gb: "git/new-branch",
 };
