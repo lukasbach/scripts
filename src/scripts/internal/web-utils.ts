@@ -35,7 +35,7 @@ export const getScriptPageMd = (script: ScriptData) => {
   content += `You can also omit options, and will be asked for them interactively.\n\n`;
   content += `Add \`--yes\` to skip all confirmations.\n\n`;
   if (script.imports.length > 0) {
-    content += `## Referenced scripts\n\n${script.imports.map((i) => `- [\`${i}\`](${i})`).join("\n")}\n\n`;
+    content += `## Referenced scripts\n\n${script.imports.map((i) => `- [\`${i}\`](/${i})`).join("\n")}\n\n`;
   }
 
   content += `## Script source\n\n\`\`\`typescript\n${script.code}\n\`\`\`\`\n\n`;
