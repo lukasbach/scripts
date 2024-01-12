@@ -53,6 +53,13 @@ export const text = async (keys: string | null, message: string, defaultValue?: 
   return value;
 };
 
+export const password = async (keys: string | null, message: string, defaultValue?: string): Promise<string> => {
+  const value =
+    getFromArgs(keys) ?? (await inquirer.prompt({ type: "password", message, default: defaultValue, name: "v" })).v;
+  registerAnswer(keys, value);
+  return value;
+};
+
 export const path = async (
   keys: string,
   message: string,

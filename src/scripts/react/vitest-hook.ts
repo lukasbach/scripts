@@ -9,7 +9,7 @@ const content = utils.noindent(`
   import { describe, expect, it } from "vitest";
   import { renderHook } from "@testing-library/react";
   import { ${pascal} } from "./${kebab}";
-
+  
   describe("${kebab}", () => {
     it("should render", () => {
       const { result } = renderHook(() => ${pascal}()));
