@@ -1,0 +1,39 @@
+import { Notice, Plugin, TFile, TFolder } from "obsidian";
+import { {{pascalCase name}}SettingTab } from "./settings-tab";
+import { DEFAULT_SETTINGS, {{pascalCase name}}Settings } from "./settings";
+
+export class {{pascalCase name}} extends Plugin {
+  settings: {{pascalCase name}}Settings;
+
+  async onload() {
+    await this.loadSettings();
+    this.addSettingTab(new {{pascalCase name}}SettingTab(this.app, this));
+
+    this.registerEvent(
+      this.app.workspace.on("file-menu", (menu, file) => {
+        menu.addItem((item) => {
+          item
+            .setTitle("Do something with items")
+            .setIcon("arrow-up-down")
+            .onClick(async () => {
+            });
+        });
+      })
+    );
+
+    this.addCommand({
+      id: "{{kebabCase name}}-command-name",
+      name: "Command label",
+      callback: () => {
+      },
+    });
+  }
+
+  async loadSettings() {
+    this.settings = { ...DEFAULT_SETTINGS, ...(await this.loadData()) };
+  }
+
+  async saveSettings() {
+    await this.saveData(this.settings);
+  }
+}

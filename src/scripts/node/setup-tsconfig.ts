@@ -7,7 +7,7 @@ const parentTsconfig = await utils.goUpTree(
   (dir) => dir !== process.cwd() && fs.pathExists(path.join(dir, "tsconfig.json"))
 );
 if (parentTsconfig) {
-  if (await ask.bool("", `A parent tsconfig exists at ${parentTsconfig}, reference that?`, "Yes")) {
+  if (await ask.bool("", `A parent tsconfig exists at ${parentTsconfig}, reference that?`, true)) {
     await fs.writeJSON("./tsconfig.json", {
       $schema: "https://json.schemastore.org/tsconfig",
       extends: path.join(path.relative(process.cwd(), parentTsconfig), "tsconfig.json"),
@@ -26,7 +26,7 @@ const module = await ask.choice(
   ],
   "esnext"
 );
-const pureEsm = await ask.bool("esm", "Do you want to use pure ESM?", "No");
+const pureEsm = await ask.bool("esm", "Do you want to use pure ESM?", false);
 
 const moduleResolution = await ask.choice(
   "resolution,r",
@@ -59,7 +59,7 @@ const emit = await ask.choice(
   "Source and Declaration"
 );
 
-const strict = await ask.bool("strict,s", "Strict mode?", "Yes");
+const strict = await ask.bool("strict,s", "Strict mode?", true);
 
 const outDir = await ask.text("output,o", "Output directory?", "lib");
 

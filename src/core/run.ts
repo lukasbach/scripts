@@ -15,6 +15,7 @@ import * as ask from "./ask.js";
 import * as log from "./log.js";
 import * as utils from "./utils.js";
 import { defaultShortcuts } from "./shortcuts.js";
+import * as prepare from "./prepare.js";
 
 inquirer.registerPrompt("autocomplete", inquirerPrompt);
 
@@ -41,6 +42,8 @@ global.glob = glob;
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 global.scriptsRoot = path.join(dirname, "../scripts");
+
+await Promise.all(Object.values(prepare).map((p) => (typeof p === "function" ? p() : () => {})));
 
 const shortcuts = await fs.default.readJSON(utils.getShortcutsFile()).catch(() => defaultShortcuts);
 

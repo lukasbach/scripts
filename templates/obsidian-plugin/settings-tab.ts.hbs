@@ -1,0 +1,29 @@
+import { App, PluginSettingTab, Setting } from "obsidian";
+import { {{pascalCase name}} } from "./plugin";
+
+export class {{pascalCase name}}SettingTab extends PluginSettingTab {
+  plugin: {{pascalCase name}};
+
+  constructor(app: App, plugin: {{pascalCase name}}) {
+    super(app, plugin);
+    this.plugin = plugin;
+  }
+
+  display(): void {
+    const { containerEl } = this;
+    containerEl.empty();
+    containerEl.createEl("h2", { text: "{{pascalCase name}} Configuration" });
+
+    new Setting(containerEl)
+      .setName("Setting name")
+      .setDesc("Setting description")
+      .addText((text) =>
+        text
+          .setValue(`${this.plugin.settings.xxx}`)
+          .onChange(async (value) => {
+            this.plugin.settings.prefixMinLength = value;
+            await this.plugin.saveSettings();
+          })
+      );
+  }
+}

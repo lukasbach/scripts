@@ -137,7 +137,7 @@ export const confirm = async (message: string, defaultValue?: string): Promise<b
   );
 };
 
-export const bool = async (keys: string, message: string, defaultValue?: string): Promise<boolean> => {
+export const bool = async (keys: string, message: string, defaultValue?: boolean): Promise<boolean> => {
   const value =
     getFromArgs(keys) ??
     (

@@ -23,3 +23,7 @@ if (await ask.confirm("Do you want to use publish-fast for releasing?")) {
 await utils.runScript("node/setup-commander");
 await utils.runScript("github/setup-node-verify-action");
 await utils.runScript("node/normalize-package-json");
+
+if (await ask.bool("git", "Do you want to initialize a github repository?")) {
+  await utils.runScript("github/create-from-local");
+}

@@ -1,5 +1,6 @@
 import path from "path";
 import noindentLib from "noindent";
+import handlebars from "handlebars";
 
 export * as node from "./node.js";
 export * as changeCase from "change-case";
@@ -69,4 +70,11 @@ export const isNotNull = <T>(x: T | null): x is T => x !== null;
 
 export const getShortcutsFile = () => {
   return path.join(os.homedir(), ".ldo-shortcuts.json");
+};
+
+export const loadTemplate = (template: string, options?: any) => {
+  const file = path.join(global.scriptsRoot, "../../templates", template);
+  const contents = global.fs.readFileSync(file, "utf-8");
+  const templateFunc = handlebars.compile(contents);
+  return templateFunc(options ?? {});
 };
