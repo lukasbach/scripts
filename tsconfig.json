@@ -9,5 +9,6 @@
     "lib": ["ESNext"],
     "skipLibCheck": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": ["docs-html"]
 }

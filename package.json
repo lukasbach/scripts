@@ -90,7 +90,8 @@
       "lib",
       "*.js",
       "lib",
-      "*.js"
+      "*.js",
+      "docs-html"
     ]
   },
   "publish": {
