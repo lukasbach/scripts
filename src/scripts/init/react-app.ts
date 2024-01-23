@@ -18,7 +18,7 @@ if (await ask.confirm("Do you want to use eslint with my default config?")) {
   );
   await fs.unlink(".eslintrc.cjs");
 
-  await utils.runScript("node/setup-eslint", { rule: "@lukasbach/react" });
+  await utils.runScript("node/setup-eslint", { rule: "@lukasbach/base/react" });
 }
 
 await utils.node.amendPackageJson({
