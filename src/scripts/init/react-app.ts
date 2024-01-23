@@ -16,6 +16,7 @@ if (await ask.confirm("Do you want to use eslint with my default config?")) {
   await utils.node.removeDependencies(
     "@typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-plugin-react-hooks eslint-plugin-react-refresh"
   );
+  await fs.unlink(".eslintrc.cjs");
 
   await utils.runScript("node/setup-eslint", { rule: "@lukasbach/react" });
 }
