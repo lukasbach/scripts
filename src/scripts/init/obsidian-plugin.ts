@@ -26,7 +26,7 @@ await utils.node.amendTsconfig({
   include: ["src/**/*.ts", "src/**/*.tsx", "types.d.ts"],
 });
 
-if (await ask.confirm("Do you want to use esbuild with my default config?")) {
+if (await ask.confirm("Do you want to use eslint with my default config?")) {
   await utils.runScript("node/setup-eslint", { rule: "@lukasbach/base" });
 }
 

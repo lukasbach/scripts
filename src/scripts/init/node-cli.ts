@@ -12,7 +12,7 @@ await utils.runScript("node/setup-tsconfig", {
   emit: "Source and Declaration",
 });
 
-if (await ask.confirm("Do you want to use esbuild with my default config?")) {
+if (await ask.confirm("Do you want to use eslint with my default config?")) {
   await utils.runScript("node/setup-eslint", { rule: "@lukasbach/base" });
 }
 

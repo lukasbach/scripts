@@ -67,6 +67,17 @@ export const addDevDependency = async (installName: string) => {
   await execaCommand(scripts[pm], { cwd: await getPackageRoot() });
 };
 
+export const removeDependencies = async (installName: string) => {
+  const pm = await getPackageManager();
+  const scripts = {
+    npm: `npm uninstall ${installName}`,
+    yarn: `yarn remove ${installName}`,
+    pnpm: `pnpm remove ${installName}`,
+  };
+  log.muted(`Removing dependencies ${installName}`);
+  await execaCommand(scripts[pm], { cwd: await getPackageRoot() });
+};
+
 export const runScript = async (scriptName: string) => {
   const pm = await getPackageManager();
   const scripts = {

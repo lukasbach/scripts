@@ -13,6 +13,6 @@ await utils.node.amendPackageJson({
     parserOptions: {
       project: "./tsconfig.json",
     },
-    ignorePatterns: ["lib", "*.js"],
+    ignorePatterns: ["lib", "dist", "*.js"],
   },
 });
