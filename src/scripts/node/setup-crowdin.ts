@@ -18,8 +18,8 @@ await fs.writeFile(
     pull_request_labels:
       - translations
     files:
-      - source: ${target}/en.json
-        translation: ${target}/%two_letters_code%.json`)
+      - source: /${target}/en.json
+        translation: /${target}/%two_letters_code%.json`)
 );
 
 await fs.writeFile(
