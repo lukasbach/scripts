@@ -15,4 +15,4 @@ const content = utils.noindent(`
     });
   });`);
 
-await fs.writeFile(path.join(process.cwd(), `${kebab}.spec.tsx`), content);
+await fs.writeFile(path.join(process.cwd(), `${kebab}.spec.ts`), content);
