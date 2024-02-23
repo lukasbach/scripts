@@ -30,6 +30,17 @@ const {
   ...rest
 } = await utils.node.getPackageJson();
 
+const sortObject = (obj: Record<string, string>) => {
+  if (!obj) return obj;
+  return Object.keys(obj)
+    .sort()
+    .reduce((result, key) => {
+      // eslint-disable-next-line no-param-reassign
+      result[key] = obj[key];
+      return result;
+    }, {} as Record<string, string>);
+};
+
 await fs.writeJSON(
   "package.json",
   {
@@ -49,9 +60,9 @@ await fs.writeJSON(
     typings,
     scripts,
     files,
-    dependencies,
-    devDependencies,
-    peerDependencies,
+    dependencies: sortObject(dependencies),
+    devDependencies: sortObject(devDependencies),
+    peerDependencies: sortObject(peerDependencies),
     engines,
     eslintConfig,
     publish,
