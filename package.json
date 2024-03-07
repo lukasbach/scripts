@@ -89,13 +89,12 @@
     "ignorePatterns": [
       "lib",
       "*.js",
-      "lib",
-      "*.js",
       "docs-html"
     ]
   },
   "publish": {
     "preScripts": "build,lint:test",
     "npmAccess": "public"
-  }
+  },
+  "funding": "https://github.com/sponsors/lukasbach"
 }

@@ -22,9 +22,17 @@ const license = await ask.text("l,license", "What is the license of the package?
 const repositoryPromise = $`git config --get remote.origin.url`.catch(() => undefined);
 const repository = (await repositoryPromise)?.stdout;
 
+const githubUser = repository?.match(/github.com[:/](.*)\/(.*)/)?.[1];
+const funding = await ask.text(
+  "f,funding",
+  "Do you want to add funding information to the package.json?",
+  `https://github.com/sponsors/${githubUser}`
+);
+
 await utils.node.amendPackageJson({
   name,
   description,
+  funding: funding.length > 0 ? funding : undefined,
   tags: topics,
   author,
   license,
