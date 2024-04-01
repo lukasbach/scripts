@@ -8,7 +8,11 @@ const packageJson = await utils.node.getPackageJson();
 const name = await ask.text("name,n", "What is the name of the package?", packageJson.name);
 const description = await ask.text("description,d", "What is the description of the package?", packageJson.description);
 const topics = (
-  await ask.text("topics", "What are the tags of the package (comma seperated)?", packageJson.tags?.join(", "))
+  await ask.text(
+    "topics",
+    "What are the tags of the package (comma seperated)?",
+    (packageJson.keywords ?? packageJson.tags)?.join(", ")
+  )
 )
   .split(",")
   .map((topic) => topic.trim());
@@ -33,7 +37,7 @@ await utils.node.amendPackageJson({
   name,
   description,
   funding: funding.length > 0 ? funding : undefined,
-  tags: topics,
+  keywords: topics,
   author,
   license,
   repository,
