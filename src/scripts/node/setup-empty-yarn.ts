@@ -1,6 +1,7 @@
 /** Creates a new empty yarn repository. */
 
 const projectPath = await ask.text("path", "Where do you want to create the project?", process.cwd());
+await fs.ensureDir(projectPath);
 await utils.cd(projectPath);
 await fs.writeJSON(
   "package.json",

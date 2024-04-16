@@ -5,7 +5,7 @@ import * as path from "path";
 
 utils.assert(await fs.exists(".git"), "Not a git repository");
 const repoName = await ask.text("_", "Repository name", path.basename(process.cwd()));
-await $({ stdio: "inherit" })`gh repo create ${repoName} --private --push --source .`;
+await $({ stdio: "inherit" })`gh repo create ${repoName} --private --source .`;
 
 if (await ask.bool("push", "Do you want to push local changes as initial commit?")) {
   await $`git add .`;
