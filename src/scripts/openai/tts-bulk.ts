@@ -1,4 +1,17 @@
-/** Generate many audio files with OpenAI TTS */
+/**
+ * Generate many audio files with OpenAI TTS.
+ *
+ * This needs a config file to run on, as a yaml file in the form of:
+ *
+ * ```yaml
+ * apiKey: "your api key"
+ * model: "tts-1-hd"
+ * voice: "alloy"
+ * lines:
+ *   prefix1: Line 1 content
+ *   prefix2: Line 2 content
+ * ```
+ */
 
 import OpenAI from "openai";
 import YAML from "yaml";
