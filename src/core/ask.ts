@@ -1,4 +1,5 @@
 import inquirer, { DistinctChoice } from "inquirer";
+import pathLib from "path";
 
 let argCounter = 0;
 const registeredAnswers: Record<string, any> = { _: [] };
@@ -70,7 +71,7 @@ export const path = async (
   // TODO
   const value = getFromArgs(keys) ?? (await inquirer.prompt({ message, default: defaultValue, name: "v" })).v;
   registerAnswer(keys, value);
-  return value;
+  return pathLib.resolve(value);
 };
 
 export const choice = async <T extends string = string>(
