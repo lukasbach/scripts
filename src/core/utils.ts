@@ -1,6 +1,8 @@
 import path from "path";
 import noindentLib from "noindent";
 import handlebars from "handlebars";
+import * as log from "./log.js";
+import * as ask from "./ask.js";
 
 export * as node from "./node.js";
 export * as changeCase from "change-case";
@@ -23,7 +25,17 @@ export const runScript = async (script: string, options?: Record<string, any> & 
   log.info(`Running: ${resolvedScript}`);
 
   global.args = { ...oldArguments, ...options, _: options?.arguments ?? options?._ ?? [] };
-  await import(`../scripts/${resolvedScript}.js`);
+  try {
+    await import(`../scripts/${resolvedScript}.js`);
+  } catch (e) {
+    log.error(`Invocation of script ${script} failed.`);
+    log.error(
+      `This might have been a sub-script, and not the originally called script. Rerun script with the following command:`
+    );
+    // eslint-disable-next-line no-underscore-dangle
+    log.muted(`  ${ask._rebuildCommand(script as string)}`);
+    throw e;
+  }
   global.args = oldArguments;
 };
 
@@ -77,4 +89,8 @@ export const loadTemplate = (template: string, options?: any) => {
   const contents = global.fs.readFileSync(file, "utf-8");
   const templateFunc = handlebars.compile(contents);
   return templateFunc(options ?? {});
+};
+
+export const getSafeFilename = (filename: string, extension?: string) => {
+  return filename.replace(/[^a-z0-9]/gi, "_") + (extension ? `.${extension}` : "");
 };

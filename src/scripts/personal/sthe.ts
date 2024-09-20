@@ -12,7 +12,15 @@ try {
 
 const zip = await ask.path("zip", "Path to zip export");
 const dist = await ask.path("dist", "dist path", "./export");
+const blacklistFolder = await ask.path(
+  "bl",
+  "Blacklist folder, folder of items with names to ignore. Leave empty to not use.",
+  ""
+);
 const tmpFolder = path.join(process.cwd(), `_tmp`);
+
+const blackListedItems = blacklistFolder ? await fs.readdir(blacklistFolder) : [];
+log.info(`Ignoring ${blackListedItems.length} items`);
 
 await fs.ensureDir(tmpFolder);
 
@@ -44,7 +52,13 @@ for (const item of await fs.readdir(path.join(tmpFolder, "scenes"))) {
   const perf = content.performers?.[0];
   const { title } = content;
   const newFilename = path.join(dist, getNewFilename(perf, title, file));
-  log.info(`Copying ${chalk.yellow(file)} to ${chalk.green(newFilename)}`);
+
+  if (blackListedItems.includes(path.basename(newFilename))) {
+    log.info(`Ignoring ${chalk.yellow(file)} because it is blacklisted`);
+    continue;
+  }
+
+  log.info(`Copying\n    ${chalk.yellow(file)}\n -> ${chalk.green(newFilename)}`);
   await fs.copy(file, newFilename);
 }
 

@@ -34,6 +34,9 @@ const registerAnswer = (keys: string | null, value: string): void => {
     registeredAnswers._.push(value);
     return;
   }
+  if (key === "script") {
+    return;
+  }
   registeredAnswers[key] = value;
 };
 
@@ -43,7 +46,7 @@ export const _rebuildCommand = (cmdName: string) => {
   const args = keys.map((k) => {
     if (registeredAnswers[k] === false) return "";
     const value = registeredAnswers[k] === true ? "" : registeredAnswers[k];
-    return `-${k.length > 1 ? "-" : ""}${k} ${value}`;
+    return `-${k.length > 1 ? "-" : ""}${k} "${value}"`;
   });
   return `ldo ${cmdName} ${registeredAnswers._.join(" ")} ${args.join(" ")}`;
 };

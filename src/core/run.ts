@@ -37,7 +37,12 @@ global.got = gotLib;
 global.ask = ask;
 global.log = log;
 global.utils = utils;
-global.glob = glob;
+global.glob = ((pattern, options) => {
+  return glob(pattern, { windowsPathsNoEscape: true, ...options });
+}) as typeof glob;
+global.glob.sync = ((pattern, options) => {
+  return glob.sync(pattern, { windowsPathsNoEscape: true, ...options });
+}) as typeof glob.sync;
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
@@ -49,6 +54,9 @@ const shortcuts = await fs.default.readJSON(utils.getShortcutsFile()).catch(() =
 
 if (!script) {
   await utils.runScript("find");
+  log.muted(`Script finished. Run the following the run again with the same parameters:`);
+  // eslint-disable-next-line no-underscore-dangle
+  log.muted(ask._rebuildCommand(script as string));
   process.exit(0);
 }
 
