@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import path from "path";
 import noindentLib from "noindent";
 import handlebars from "handlebars";
@@ -17,7 +18,26 @@ export const runScript = async (script: string, options?: Record<string, any> & 
   );
 
   if (!resolvedScript) {
-    log.exit(`Could not find script ${script}`);
+    const unnameds = global.args._.map((a) => `"${a}"`).join(" ");
+    const nameds = Object.entries(global.args)
+      .filter(([k]) => k !== "_")
+      .map(([k, v]) => {
+        const key = k.length === 1 ? `-${k}` : `--${k}`;
+        const value = v === true ? "" : `"${v}"`;
+        return `${key} ${value}`;
+      })
+      .join(" ");
+    try {
+      await $({ stdio: "inherit" })`${script} ${unnameds} ${nameds}`;
+      return;
+    } catch (e) {
+      log.error(
+        `Script ${script} not found, and running ${script} as global script yielded an error. Run as verbose for details.`
+      );
+      log.info(`ran: ${script} ${unnameds} ${nameds}`);
+      log.verbose(e);
+      process.exit(1);
+    }
   }
 
   const oldArguments = global.args;
@@ -32,7 +52,6 @@ export const runScript = async (script: string, options?: Record<string, any> & 
     log.error(
       `This might have been a sub-script, and not the originally called script. Rerun script with the following command:`
     );
-    // eslint-disable-next-line no-underscore-dangle
     log.muted(`  ${ask._rebuildCommand(script as string)}`);
     throw e;
   }

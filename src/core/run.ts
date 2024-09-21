@@ -21,7 +21,7 @@ import * as prepare from "./prepare.js";
 
 inquirer.registerPrompt("autocomplete", inquirerPrompt);
 
-const argv = await yargs(hideBin(process.argv)).help(false).argv;
+const { $0, ...argv } = await yargs(hideBin(process.argv)).help(false).argv;
 const [script, ...args] = argv._;
 global.args = { ...argv, _: args };
 

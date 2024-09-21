@@ -55,6 +55,8 @@ export const getShortcutsMd = () => {
     `# Shortcuts\n\n` +
     `The following shortcuts are available for commands that are more commonly used.\n\n` +
     `You can customize shortcuts with \`ldo edit-shortcuts\`\n\n` +
-    `${shortcuts}`
+    `${shortcuts}\n\n` +
+    `You can also add other global commands to the shortcuts file. For example, ` +
+    `adding the shortcut \`npm run build:ci\` as \`npmb\`, then calling \`ldo npmb --verbose\` will call \`npm run build:ci --verbose\`.`
   );
 };

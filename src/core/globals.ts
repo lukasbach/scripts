@@ -4,7 +4,6 @@ import type * as fsLib from "fs-extra";
 import type * as pathLib from "path";
 import type * as osLib from "os";
 import type gotLib from "got";
-import { Arguments } from "yargs";
 import type { glob as globLib } from "glob";
 import type * as yamlLib from "yaml";
 import type { z as zodLib } from "zod";
@@ -13,7 +12,7 @@ import type * as utilsLib from "./utils.js";
 import type * as logLib from "./log.js";
 
 declare global {
-  var args: Arguments;
+  var args: { [key: string]: unknown; _: (string | number)[] };
   var $: typeof execaLib.$;
   var fs: typeof fsLib;
   var path: typeof pathLib;

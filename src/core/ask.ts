@@ -41,15 +41,18 @@ const registerAnswer = (keys: string | null, value: string): void => {
 };
 
 // eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle
-export const _rebuildCommand = (cmdName: string) => {
+export const _rebuildArgsString = () => {
   const keys = Object.keys(registeredAnswers).filter((k) => k !== "_");
   const args = keys.map((k) => {
     if (registeredAnswers[k] === false) return "";
     const value = registeredAnswers[k] === true ? "" : registeredAnswers[k];
     return `-${k.length > 1 ? "-" : ""}${k} "${value}"`;
   });
-  return `ldo ${cmdName} ${registeredAnswers._.join(" ")} ${args.join(" ")}`;
+  return `${registeredAnswers._.map((a) => `"${a}"`).join(" ")} ${args.join(" ")}`;
 };
+
+// eslint-disable-next-line @typescript-eslint/naming-convention,no-underscore-dangle
+export const _rebuildCommand = (cmdName: string) => `ldo ${cmdName} ${_rebuildArgsString()}`;
 
 export const text = async (keys: string | null, message: string, defaultValue?: string): Promise<string> => {
   const value = getFromArgs(keys) ?? (await inquirer.prompt({ message, default: defaultValue, name: "v" })).v;
