@@ -1,0 +1,17 @@
+name: React Functional Component (FC)
+shorts:
+  - fc
+variables:
+  - name: name
+    message: Component Name
+    default: MyComponent
+===== ./{{ kebabCase name }}.tsx
+import { FC } from "react";
+
+export const {{ pascalCase name }}: FC<{}> = ({}) => {
+  return (
+    <>
+      hello
+    </>
+  );
+};

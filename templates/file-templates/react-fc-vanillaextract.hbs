@@ -1,0 +1,29 @@
+name: React Functional Component (FC) with external Vanilla Extract Stylesheet
+shorts:
+  - fcv
+  - fcvanilla
+variables:
+  - name: name
+    message: Component Name
+    default: MyComponent
+  - name: stylesheet
+    message: Stylesheet File name
+    default: "{{ pascalCase name }}"
+===== ./{{ kebabCase name }}.tsx
+import { FC } from "react";
+import * as styles from "./{{ kebabCase stylesheet }}.css.ts";
+
+export const {{ pascalCase name }}: FC<{}> = ({}) => {
+  return (
+    <div className={styles.container}>
+      hello
+    </div>
+  );
+};
+
+===== ./{{ kebabCase stylesheet }}.css.ts
+import { style } from "@vanilla-extract/css";
+
+export const container = style({
+  backgroundColor: "red",
+});
