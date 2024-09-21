@@ -3,7 +3,7 @@
  *
  * Only works for repositories hosted in the github.com/lukasbach account.
  *
- * @private
+ * @internal
  */
 
 const repoName = (await $`gh repo view --json name -q .name`).stdout;

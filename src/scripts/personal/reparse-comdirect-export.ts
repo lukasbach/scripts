@@ -1,5 +1,5 @@
 /**
- * @private
+ * @internal
  */
 
 const csvPath = await ask.path("_", "CSV Export");

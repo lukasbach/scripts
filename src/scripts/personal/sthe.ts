@@ -1,5 +1,5 @@
 /**
- * @private
+ * @internal
  */
 
 import chalk from "chalk";
