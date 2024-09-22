@@ -19,7 +19,7 @@ const templateSearch = await ask.choice(
 );
 const templateName = templateIndex[templateSearch]
   ? templateSearch
-  : Object.entries(templateIndex).find(([key, value]) => value.shorts?.includes(templateSearch))?.[0];
+  : Object.entries(templateIndex).find(([, value]) => value.shorts?.includes(templateSearch))?.[0];
 
 if (!templateName) {
   log.exit(`Could not find template ${templateSearch}`);
