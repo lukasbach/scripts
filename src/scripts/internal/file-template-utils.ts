@@ -57,7 +57,7 @@ ${template.header.variables
       `- **${v.name}**: ${v.message} (default: \`${v.default ?? "unspecified"}\`)\n` +
       `  - Specify with \`--${v.name} <value>\``
   )
-  .join("\n     ")}`;
+  .join("\n")}`;
 
   return `---
 title: ${template.header.name}
