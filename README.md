@@ -90,3 +90,9 @@ The following scripts are currently implemented:
 - [ffmpeg/bulk-reduce-bitrate](https://scripts.lukasbach.com/ffmpeg/bulk-reduce-bitrate) - Uses ffmpeg to reduce the bitrate of all videos matched by a glob. Videos are copied, not replaced.
 - [ffmpeg/bulk-flac-to-mp3](https://scripts.lukasbach.com/ffmpeg/bulk-flac-to-mp3) - Converts all flac files matched by a glob to mp3.
 <!-- scripts:end -->
+
+# File Templates
+
+`@lukasbach/scripts` also supports a variety of file templates that can be created with the `template` command,
+or with the `ldot {template-name}` shortcut. You can find more details and a list of all available templates
+[in the documentation about file templates](https://scripts.lukasbach.com/about/file-templates/).

@@ -16,6 +16,7 @@ jobs:
       - uses: volta-cli/action@v3
       - run: yarn
       - run: yarn build
+      - run: yarn build:templates
       - run: yarn build:docs
       - uses: actions/upload-pages-artifact@v2
         with:

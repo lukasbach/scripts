@@ -19,4 +19,5 @@ videos
 docs
 !docs/config.yml
 !docs/about/folder.yml
+!docs/about/templates/folder.yml
 docs-html

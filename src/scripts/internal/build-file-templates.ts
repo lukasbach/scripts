@@ -1,13 +1,14 @@
 /** @internal */
 
 import pathLib from "path";
-import { FileTemplateHeader, FileTemplateIndex } from "./file-template-utils.js";
+import { FileTemplateHeader, FileTemplateIndex, getTemplateIndexMd, getTemplateMd } from "./file-template-utils.js";
 
 const templateFiles = await glob("templates/file-templates/**/*.hbs", {
   cwd: pathLib.join(global.scriptsRoot, "../.."),
 });
 
 const templateDistDir = pathLib.join(global.scriptsRoot, "../..", "lib/file-templates");
+const docsDir = pathLib.join(global.scriptsRoot, "../..", "docs/about");
 log.verbose(`Using dist dir ${templateDistDir}`);
 
 const templateIndex = {};
@@ -35,16 +36,23 @@ const readTemplateFile = async (templateFile) => {
       return { fileId, fileName, header: fileHeader, template };
     })
   );
-  return { header, files };
+  return { header, files, id: pathLib.basename(templateFile, ".hbs") };
 };
+
+export type ParsedFileTemplate = Awaited<ReturnType<typeof readTemplateFile>>;
 
 for (const templateFile of templateFiles) {
   const template = await readTemplateFile(templateFile);
 
-  templateIndex[pathLib.basename(templateFile, ".hbs")] = template.header;
-  await fs.writeJSON(pathLib.join(templateDistDir, `${pathLib.basename(templateFile, ".hbs")}.json`), template);
+  templateIndex[template.id] = template.header;
+  await fs.writeJSON(pathLib.join(templateDistDir, `${template.id}.json`), template);
+  await fs.writeFile(pathLib.join(docsDir, `templates/${template.id}.md`), getTemplateMd(template));
 
   log.success(`Parsed template ${template.header.name}`);
 }
 
 await fs.writeJSON(pathLib.join(templateDistDir, "index.json"), FileTemplateIndex.parse(templateIndex));
+await fs.writeFile(
+  pathLib.join(docsDir, `file-templates.md`),
+  getTemplateIndexMd(FileTemplateIndex.parse(templateIndex))
+);
