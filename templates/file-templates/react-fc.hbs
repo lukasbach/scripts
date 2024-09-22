@@ -5,7 +5,12 @@ variables:
   - name: name
     message: Component Name
     default: MyComponent
-===== ./{{ kebabCase name }}.tsx
+files:
+  jest:
+    default: false
+  vitest:
+    default: false
+===== component:./{{ kebabCase name }}.tsx
 import { FC } from "react";
 
 export const {{ pascalCase name }}: FC<{}> = ({}) => {
@@ -15,3 +20,26 @@ export const {{ pascalCase name }}: FC<{}> = ({}) => {
     </>
   );
 };
+
+===== jest:./{{ kebabCase name }}.spec.ts
+import { render } from "@testing-library/react";
+import { {{ pascalCase name}} } from "./{{ kebabCase name }}";
+
+describe("{{ kebabCase name }}", () => {
+  it("should render", () => {
+    const { getByText } = render(<{{ pascalCase name}} />);
+    expect(getByText("hello")).toBeInTheDocument();
+  });
+});
+
+===== vitest:./{{ kebabCase name }}.spec.ts
+import { describe, expect, it } from "vitest";
+import { render } from "@testing-library/react";
+import { {{ pascalCase name}} } from "./{{ kebabCase name }}";
+
+describe("{{ kebabCase name }}", () => {
+  it("should render", () => {
+    const { getByText } = render(<{{ pascalCase name}} />);
+    expect(getByText("hello")).toBeInTheDocument();
+  });
+});

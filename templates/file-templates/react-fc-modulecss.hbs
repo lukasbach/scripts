@@ -1,7 +1,7 @@
 name: React Functional Component (FC) with Module CSS Stylesheet
 shorts:
-  - fcv
-  - fcvanilla
+  - fcmcss
+  - fcmodulecss
 variables:
   - name: name
     message: Component Name
@@ -9,7 +9,13 @@ variables:
   - name: stylesheet
     message: Stylesheet File name
     default: "{{ camelCase name }}"
-===== ./{{ kebabCase name }}.tsx
+files:
+  jest:
+    import: ./react-fc.hbs:jest
+  vitest:
+    import: ./react-fc.hbs:vitest
+
+===== component:./{{ kebabCase name }}.tsx
 import { FC } from "react";
 import * as styles from "./{{ kebabCase stylesheet }}.css";
 
@@ -21,6 +27,9 @@ export const {{ pascalCase name }}: FC<{}> = ({}) => {
   );
 };
 
-===== ./{{ kebabCase stylesheet }}.css
+===== stylesheet:./{{ kebabCase stylesheet }}.css
 .container {
 }
+
+===== jest:./{{ kebabCase name }}.spec.ts
+===== vitest:./{{ kebabCase name }}.spec.ts

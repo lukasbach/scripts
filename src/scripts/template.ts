@@ -1,12 +1,9 @@
 import pathLib from "path";
 import { z } from "zod";
 import handlebars from "handlebars";
-import {
-  FileTemplateConfig,
-  FileTemplateHeader,
-  FileTemplateIndex,
-  FileTemplateVariable,
-} from "./internal/file-template-utils.js";
+import { FileTemplateConfig, FileTemplateIndex, FileTemplateVariable } from "./internal/file-template-utils.js";
+
+/** Create files based on a template definition. */
 
 const templateDistDir = pathLib.join(global.scriptsRoot, "../..", "lib/file-templates");
 const templateIndex = FileTemplateIndex.parse(await fs.readJSON(pathLib.join(templateDistDir, "index.json")));
@@ -50,8 +47,26 @@ for (const variable of templateIndex[templateName].variables) {
 const templateConfig = FileTemplateConfig.parse(
   await fs.readJSON(pathLib.join(global.scriptsRoot, "../..", "lib/file-templates", `${templateName}.json`))
 );
+
 for (const file of templateConfig.files) {
-  const filename = handlebars.compile(file.filename)(variables);
+  const filename = handlebars.compile(file.fileName)(variables);
+  if (file.fileId in global.args) {
+    continue;
+  }
+  if (file.header.ask || file.header.default === false) {
+    if (file.header.ask) {
+      if (!(await ask.bool(file.fileId, `Write ${file.fileId} file? (${filename})`, file.header.default ?? true))) {
+        templateConfig.files = templateConfig.files.filter((f) => f !== file);
+      }
+    } else {
+      log.info(`Skipping ${file.fileId} file (${filename}). Use --${file.fileId} to write file.`);
+      templateConfig.files = templateConfig.files.filter((f) => f !== file);
+    }
+  }
+}
+
+for (const file of templateConfig.files) {
+  const filename = handlebars.compile(file.fileName)(variables);
   const content = handlebars.compile(file.template)(variables);
   await fs.writeFile(filename, content);
   log.success(`Wrote ${filename}`);

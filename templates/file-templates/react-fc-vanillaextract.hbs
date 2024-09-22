@@ -9,7 +9,12 @@ variables:
   - name: stylesheet
     message: Stylesheet File name
     default: "{{ pascalCase name }}"
-===== ./{{ kebabCase name }}.tsx
+files:
+  jest:
+    import: ./react-fc.hbs:jest
+  vitest:
+    import: ./react-fc.hbs:vitest
+===== component:./{{ kebabCase name }}.tsx
 import { FC } from "react";
 import * as styles from "./{{ kebabCase stylesheet }}.css.ts";
 
@@ -21,9 +26,12 @@ export const {{ pascalCase name }}: FC<{}> = ({}) => {
   );
 };
 
-===== ./{{ kebabCase stylesheet }}.css.ts
+===== stylesheet:./{{ kebabCase stylesheet }}.css.ts
 import { style } from "@vanilla-extract/css";
 
 export const container = style({
   backgroundColor: "red",
 });
+
+===== jest:./{{ kebabCase stylesheet }}.css
+===== vitest:./{{ kebabCase stylesheet }}.css

@@ -151,7 +151,7 @@ export const bool = async (keys: string, message: string, defaultValue?: boolean
       await inquirer.prompt({
         type: "list",
         message,
-        default: defaultValue,
+        default: defaultValue === false ? "No" : "Yes",
         choices: ["Yes", "No"],
         name: "v",
       } as any)
