@@ -2,6 +2,7 @@
 import path from "path";
 import noindentLib from "noindent";
 import handlebars from "handlebars";
+import { z } from "zod";
 import * as log from "./log.js";
 import * as ask from "./ask.js";
 
@@ -112,4 +113,25 @@ export const loadTemplate = (template: string, options?: any) => {
 
 export const getSafeFilename = (filename: string, extension?: string) => {
   return filename.replace(/[^a-z0-9]/gi, "_") + (extension ? `.${extension}` : "");
+};
+
+export const remapObject = <T>(original: any, matcher: z.ZodType<T>, replacer: (previous: T) => any) => {
+  const parsed = matcher.safeParse(original);
+  if (parsed.success) {
+    return replacer(parsed.data);
+  }
+
+  if (!original) return original;
+
+  if (Array.isArray(original)) {
+    return original.map((item) => remapObject(item, matcher, replacer));
+  }
+
+  if (typeof original === "object") {
+    return Object.fromEntries(
+      Object.entries(original).map(([key, value]) => [key, remapObject(value, matcher, replacer)])
+    );
+  }
+
+  return original;
 };

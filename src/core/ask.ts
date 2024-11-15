@@ -80,6 +80,23 @@ export const path = async (
   return pathLib.resolve(value);
 };
 
+export const glob = async (
+  keys: string,
+  message: string,
+  defaultValue?: string,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  fileExtensions?: string[]
+): Promise<string[]> => {
+  const resolvedPath = await path(keys, message, defaultValue, fileExtensions);
+  const filePaths = global.glob.sync(resolvedPath);
+  log.info(`Found ${filePaths.length} files with ${resolvedPath}: ${filePaths.join(", ")}`);
+
+  if (!(await ask.confirm("Continue?"))) {
+    log.exit("User aborted.");
+  }
+  return filePaths;
+};
+
 export const choice = async <T extends string = string>(
   keys: string | null,
   message: string,
