@@ -136,3 +136,19 @@ export const remapObject = <T>(original: any, matcher: z.ZodType<T>, replacer: (
 
   return original;
 };
+
+export const verifyZipBinary = async () => {
+  try {
+    await $`7z`;
+  } catch {
+    log.exit("Make sure to place the 7z binary in your PATH");
+  }
+};
+
+export const zip = async (
+  targetArchive: string,
+  from: string,
+  compression: "0" | "1" | "3" | "5" | "7" | "9" = "5"
+) => {
+  await $`7z a ${targetArchive} ${from} -mx=${compression} -mtm=on -mtc=on`;
+};
