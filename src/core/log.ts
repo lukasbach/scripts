@@ -13,6 +13,13 @@ export const muted = (...args: any[]) => {
   console.log(`${chalk.gray("...")} `, ...args.map((arg) => (typeof arg === "string" ? chalk.dim(arg) : arg)));
 };
 
+export const dryrun = (...args: any[]) => {
+  console.log(
+    `${chalk.bgWhite(chalk.black("dryrun"))} `,
+    ...args.map((arg) => (typeof arg === "string" ? chalk.dim(arg) : arg))
+  );
+};
+
 export const verbose = (...args: any[]) => {
   if (global.args.v || global.args.verbose) {
     console.log(chalk.dim("verbose"), ...args);

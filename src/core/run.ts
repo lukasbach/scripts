@@ -56,6 +56,8 @@ await Promise.all(Object.values(prepare).map((p) => (typeof p === "function" ? p
 
 const shortcuts = await fs.default.readJSON(utils.getShortcutsFile()).catch(() => defaultShortcuts);
 
+// TODO extract this into a seperate file as function, than call that in run.ts and run-template.ts
+
 if (!script) {
   await utils.runScript("find");
   log.muted(`Script finished. Run the following the run again with the same parameters:`);

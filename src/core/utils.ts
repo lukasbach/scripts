@@ -8,6 +8,7 @@ import * as ask from "./ask.js";
 
 export * as node from "./node.js";
 export * as changeCase from "change-case";
+export * as exif from "./exif.js";
 
 export const noindent = noindentLib.default;
 
