@@ -4,6 +4,7 @@
   "version": "0.0.20",
   "description": "Various scripts for doing stuff fast",
   "bin": {
+    "scripts": "lib/core/run.js",
     "ldo": "lib/core/run.js",
     "ldot": "lib/core/run.js template"
   },
