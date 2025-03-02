@@ -4,9 +4,9 @@
   "version": "0.0.20",
   "description": "Various scripts for doing stuff fast",
   "bin": {
-    "scripts": "lib/core/run.js",
     "ldo": "lib/core/run.js",
-    "ldot": "lib/core/run.js template"
+    "ldot": "lib/core/run.js template",
+    "scripts": "lib/core/run.js"
   },
   "main": "lib/index.js",
   "module": "lib/index.js",
@@ -50,6 +50,7 @@
     "inquirer": "^9.2.12",
     "inquirer-autocomplete-prompt": "^3.0.1",
     "marked": "^11.0.0",
+    "md5-file": "^5.0.0",
     "minimist": "^1.2.8",
     "node-fetch": "^3.3.2",
     "noindent": "^1.0.0",
