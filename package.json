@@ -1,7 +1,7 @@
 {
   "name": "@lukasbach/scripts",
   "type": "module",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "Various scripts for doing stuff fast",
   "bin": {
     "ldo": "lib/core/run.js",
