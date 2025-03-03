@@ -35,8 +35,8 @@ for (const repo of reposGlob) {
   const mainBranch = branches.find((b) => b === "main" || b === "master");
 
   for (const branch of branches) {
-    const hasRemote = (await $$`git ls-remote origin ${branch}`).stdout !== "";
-    if (!hasRemote) {
+    const hasBranchRemote = (await $$`git ls-remote origin ${branch}`).stdout !== "";
+    if (!hasBranchRemote) {
       const commitsNotOnMain = mainBranch && (await $$`git log ${mainBranch}..${branch}`).stdout;
 
       if (branch === mainBranch) {
