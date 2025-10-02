@@ -5,8 +5,9 @@
  *
  * ```yaml
  * apiKey: "your api key"
- * model: "tts-1-hd"
- * voice: "alloy"
+ * model: gpt-4o-mini-tts
+ * voice: alloy
+ * instructions: Read in an excited, engaging and enthuastic tone
  * lines:
  *   prefix1: Line 1 content
  *   prefix2: Line 2 content
@@ -21,6 +22,7 @@ type Config = {
   model: string;
   voice: string;
   lines: Record<string, string>;
+  instructions?: string;
 };
 
 const config = YAML.parse(
@@ -30,7 +32,7 @@ const config = YAML.parse(
 const openai = new OpenAI({ apiKey: config.apiKey });
 
 for (const [key, input] of Object.entries(config.lines)) {
-  const cleanedInput = input.replace(/[^a-zA-Z0-9]/g, "_");
+  const cleanedInput = input.replace(/[^a-zA-Z0-9]/g, "_").slice(0, 50);
   const speechFile = `${key}_${cleanedInput}.mp3`;
 
   if (fs.existsSync(speechFile)) {
@@ -42,8 +44,9 @@ for (const [key, input] of Object.entries(config.lines)) {
     model: config.model,
     voice: config.voice as any,
     input,
+    instructions: config.instructions,
   });
   const buffer = Buffer.from(await mp3.arrayBuffer());
-  await fs.writeFile(speechFile, buffer);
-  log.success(`Generated ${speechFile}`);
+  await fs.writeFile(speechFile, buffer as any);
+  log.success(`Saved ${speechFile}`);
 }

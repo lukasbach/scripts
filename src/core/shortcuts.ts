@@ -8,4 +8,5 @@ export const defaultShortcuts = {
   vith: "react/vitest-hook",
   vitl: "react/vitest-logic",
   gb: "git/new-branch",
+  n: "node/run",
 };

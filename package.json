@@ -54,7 +54,7 @@
     "minimist": "^1.2.8",
     "node-fetch": "^3.3.2",
     "noindent": "^1.0.0",
-    "openai": "^4.47.1",
+    "openai": "^5.1.0",
     "simple-git": "^3.21.0",
     "terminal-link": "^3.0.0",
     "yaml": "^2.5.1",
