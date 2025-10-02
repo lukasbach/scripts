@@ -76,6 +76,9 @@ for (const [index, originalRepoUrl] of config.repos.entries()) {
 
     log.muted("  Creating zip file...");
     const zipPath = path.join(targetFolder, `${repoName}.7z`);
+    if (fs.existsSync(zipPath)) {
+      await fs.remove(zipPath);
+    }
     await utils.zip(zipPath, path.join(repoTmpPath, "*"));
 
     log.muted("  Cleaning up temporary files...");
